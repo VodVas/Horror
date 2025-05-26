@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfad28e8cfa719943bcd0c5fca76ce88, type: 3}
+  m_Name: DisgustedEmotion
+  m_EditorClassIdentifier: 
+  emotionType: 5
+  blendShapes:
+  - blendShape: 49
+    weight: 0.9
+  - blendShape: 50
+    weight: 0.9
+  - blendShape: 47
+    weight: 0.6
+  - blendShape: 48
+    weight: 0.6
+  - blendShape: 6
+    weight: 0.7
+  - blendShape: 7
+    weight: 0.7
+  defaultIntensity: 1
+  defaultDuration: 0.3
