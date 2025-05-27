@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emotionType: 1
   blendShapes:
-  - blendShape: 43
-    weight: 0.8
-  - blendShape: 44
-    weight: 0.8
-  - blendShape: 6
-    weight: 0.4
-  - blendShape: 7
-    weight: 0.4
-  - blendShape: 18
-    weight: 0.2
-  - blendShape: 19
-    weight: 0.2
+  - <BlendShape>k__BackingField: 43
+    <Weight>k__BackingField: 0.8
+  - <BlendShape>k__BackingField: 44
+    <Weight>k__BackingField: 0.8
+  - <BlendShape>k__BackingField: 6
+    <Weight>k__BackingField: 0.4
+  - <BlendShape>k__BackingField: 7
+    <Weight>k__BackingField: 0.4
+  - <BlendShape>k__BackingField: 18
+    <Weight>k__BackingField: 0.2
+  - <BlendShape>k__BackingField: 19
+    <Weight>k__BackingField: 0.2
   defaultIntensity: 1
   defaultDuration: 0.3

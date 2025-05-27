@@ -15,20 +15,6 @@ public sealed class OptimizedLookController
         _config = config;
     }
 
-    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-    //public void UpdateLook(Vector2 lookInput, float deltaTime)
-    //{
-    //    if (_cameraTransform == null) return;
-
-    //    float sensitivity = _config.MouseSensitivity * deltaTime;
-
-    //    _playerTransform.Rotate(0, lookInput.x * sensitivity, 0);
-
-    //    _verticalRotation -= lookInput.y * sensitivity;
-    //    _verticalRotation = Mathf.Clamp(_verticalRotation, -_config.MaxVerticalAngle, _config.MaxVerticalAngle);
-    //    _cameraTransform.localEulerAngles = new Vector3(_verticalRotation, 0, 0);
-    //}
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void UpdateLook(Vector2 lookInput, float deltaTime, bool isUsingGamepad)
     {

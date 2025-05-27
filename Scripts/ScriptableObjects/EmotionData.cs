@@ -29,8 +29,9 @@ public class EmotionData : ScriptableObject
     {
         foreach (var weight in weights)
         {
-            weight.weight = Mathf.Clamp01(weight.weight);
+            weight.SetWeight(Mathf.Clamp01(weight.Weight));
         }
+
         return weights;
     }
 #endif
