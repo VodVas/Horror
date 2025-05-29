@@ -58,7 +58,7 @@ public class FacialExpressionController : MonoBehaviour, IFacialExpressionContro
     public void Initialize()
     {
         if (!faceMesh) faceMesh = GetComponent<SkinnedMeshRenderer>();
-        if (!faceMesh) throw new System.Exception("SkinnedMeshRenderer not found");
+        if (!faceMesh) throw new Exception("SkinnedMeshRenderer not found");
 
         CacheBlendShapeIndices();
         BuildEmotionDatabase();
@@ -88,6 +88,7 @@ public class FacialExpressionController : MonoBehaviour, IFacialExpressionContro
     public void SetEmotion(EmotionType emotion)
     {
         if (!_emotions.TryGetValue(emotion, out var emotionData)) return;
+
         SetEmotion(emotion, emotionData.DefaultIntensity, emotionData.DefaultDuration);
     }
 

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfad28e8cfa719943bcd0c5fca76ce88, type: 3}
+  m_Name: HopefulEmotion
+  m_EditorClassIdentifier: 
+  emotionType: 8
+  blendShapes:
+  - <BlendShape>k__BackingField: 2
+    <Weight>k__BackingField: 0.6
+  - <BlendShape>k__BackingField: 43
+    <Weight>k__BackingField: 0.4
+  - <BlendShape>k__BackingField: 44
+    <Weight>k__BackingField: 0.4
+  - <BlendShape>k__BackingField: 18
+    <Weight>k__BackingField: 0.3
+  - <BlendShape>k__BackingField: 19
+    <Weight>k__BackingField: 0.3
+  - <BlendShape>k__BackingField: 47
+    <Weight>k__BackingField: 0.2
+  - <BlendShape>k__BackingField: 48
+    <Weight>k__BackingField: 0.2
+  defaultIntensity: 1
+  defaultDuration: 1

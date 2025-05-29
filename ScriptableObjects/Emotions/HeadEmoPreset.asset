@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74df65190a49d8f47bcc5d5c96e1b560, type: 3}
+  m_Name: HeadEmoPreset
+  m_EditorClassIdentifier: 
+  emotions:
+  - {fileID: 11400000, guid: 827e49fde972ad04487858fb27f8f728, type: 2}
+  - {fileID: 11400000, guid: 180e7d44f4fd06d4fa107959c3d18a78, type: 2}
+  - {fileID: 11400000, guid: 107565b4560034e4aa9608540caeb1a3, type: 2}
+  - {fileID: 11400000, guid: ae3f5a7e717043447b87d1971c5265d4, type: 2}
+  - {fileID: 11400000, guid: fc3c00d4a62675b4f9dc96c6bb382cfc, type: 2}

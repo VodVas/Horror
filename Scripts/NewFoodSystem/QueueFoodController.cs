@@ -1,145 +1,104 @@
 ﻿using UnityEngine;
-using VodVas.InterfaceSerializer;
+using Zenject;
 
-public class QueueFoodController : MonoBehaviour
+[RequireComponent(typeof(PhysicsItemScanner))]
+public sealed class QueueFoodController : MonoBehaviour
 {
-    [Header("Cup Settings")]
-    [SerializeField] private Transform[] _targetCups;
-    [SerializeField] private GameObject _cupPrefab;
-    [SerializeField] private Transform _cupHoldPosition;
-
-    [Header("Throw Settings")]
+    [SerializeField] private ItemSpawnPoint[] _targetSpawnPoints;
+    [SerializeField] private Transform _itemHoldPosition;
     [SerializeField] private float _throwForce = 10f;
+    [SerializeField] private float _pickupRadius = 2f;
+    [SerializeField] private float _pickupAngle = 10f;
 
-    [Header("Pickup Settings")]
-    [SerializeField] private float _pickupRadius = 1.5f;
-    [SerializeField] private float _pickupAngle = 45f;
+    [Inject] private NewInputProvider _input;
+    [Inject] private IFoodSpawner _foodSpawner;
 
-    [SerializeField, InterfaceConstraint(typeof(IInputProvider))]
-    private MonoBehaviour _inputProvider;
+    private ItemScannerService _scannerService;
+    private ItemSpawnService _spawnService;
+    private PositionalItemGripper _heldItemManager;
+    private ThrowItemService _throwItemService;
 
-    private GameObject _cupInHand;
-    private bool _hasCupInHand = false;
-    private IInputProvider _input => _inputProvider as IInputProvider;
+    private void Awake()
+    {
+        var physicsScanner = GetComponent<PhysicsItemScanner>();
+        _scannerService = gameObject.AddComponent<ItemScannerService>();
+        _scannerService.Initialize(physicsScanner);
+
+        _spawnService = new ItemSpawnService(_foodSpawner);
+        _heldItemManager = new PositionalItemGripper(_itemHoldPosition);
+        _throwItemService = new ThrowItemService(_throwForce);
+    }
 
     private void Update()
     {
         if (_input.GetPushInput())
         {
-            if (_hasCupInHand) ThrowCup();
-            else TryTakeCup();
+            if (_heldItemManager.HasItem)
+                ThrowItem();
+            else
+                TryTakeItem();
         }
     }
 
-    private void TryTakeCup()
+    private void TryTakeItem()
     {
-        if (_hasCupInHand) return;
+        var closestSpawn = GetClosestSpawnPoint();
 
-        Transform closestTarget = null;
-        float closestDistance = Mathf.Infinity;
-
-        foreach (Transform target in _targetCups)
+        if (closestSpawn != null)
         {
-            if (target == null || !target.gameObject.activeSelf) continue;
+            var newItem = _spawnService.SpawnItem(closestSpawn.itemType, _itemHoldPosition.position);
 
-            Vector3 toTarget = target.position - transform.position;
-            float distance = toTarget.magnitude;
-            if (distance > _pickupRadius) continue;
-
-            float angle = Vector3.Angle(transform.forward, toTarget.normalized);
-            if (angle > _pickupAngle) continue;
-
-            if (distance < closestDistance)
+            if (newItem != null)
             {
-                closestDistance = distance;
-                closestTarget = target;
+                _heldItemManager.TakeItem(newItem);
+                return;
             }
         }
 
-        if (closestTarget != null)
+        var closestItem = _scannerService.FindNearestPickupable(transform.position, transform.forward, _pickupRadius, _pickupAngle);
+
+        if (closestItem != null)
         {
-            TakeNewCup();
-            return;
+            _heldItemManager.TakeItem(closestItem);
         }
+    }
 
-        Collider[] cups = Physics.OverlapSphere(transform.position, _pickupRadius, LayerMask.GetMask("Default"));
-        GameObject closestCup = null;
-        float minDist = Mathf.Infinity;
+    private ItemSpawnPoint GetClosestSpawnPoint()
+    {
+        ItemSpawnPoint closest = null;
+        float minDistance = _pickupRadius;
 
-        foreach (Collider col in cups)
+        for (int i = 0; i < _targetSpawnPoints.Length; i++)
         {
-            if (!col.CompareTag("Cup")) continue;
+            var spawnPoint = _targetSpawnPoints[i];
 
-            Rigidbody rb = col.GetComponent<Rigidbody>();
-            if (rb == null || rb.isKinematic) continue;
+            if (spawnPoint == null || !spawnPoint.gameObject.activeSelf) continue;
 
-            Vector3 dir = col.transform.position - transform.position;
-            float angle = Vector3.Angle(transform.forward, dir.normalized);
+            Vector3 toPoint = spawnPoint.transform.position - transform.position;
+            float distance = toPoint.sqrMagnitude;
+
+            if (distance > minDistance * minDistance) continue;
+
+            float angle = Vector3.Angle(transform.forward, toPoint.normalized);
+
             if (angle > _pickupAngle) continue;
 
-            float dist = dir.sqrMagnitude;
-            if (dist < minDist)
+            if (closest == null || distance < minDistance * minDistance)
             {
-                minDist = dist;
-                closestCup = col.gameObject;
+                minDistance = Mathf.Sqrt(distance);
+                closest = spawnPoint;
             }
         }
 
-        if (closestCup != null)
-        {
-            _cupInHand = closestCup;
-            PickUpThrownCup();
-        }
+        return closest;
     }
 
-    private void TakeNewCup()
+    private void ThrowItem()
     {
-        if (_cupPrefab == null || _cupHoldPosition == null) return;
+        var item = _heldItemManager.ReleaseItem();
 
-        _cupInHand = Instantiate(_cupPrefab, _cupHoldPosition.position, _cupHoldPosition.rotation, _cupHoldPosition);
-        _cupInHand.SetActive(true);
-        ResetCupInHand();
-        _hasCupInHand = true;
-    }
+        if (item == null) return;
 
-    private void PickUpThrownCup()
-    {
-        if (_cupInHand == null) return;
-
-        _cupInHand.SetActive(true);
-        ResetCupInHand();
-        _hasCupInHand = true;
-    }
-
-    private void ResetCupInHand()
-    {
-        _cupInHand.transform.SetParent(_cupHoldPosition);
-        _cupInHand.transform.localPosition = Vector3.zero;
-        _cupInHand.transform.localRotation = Quaternion.identity;
-
-        if (_cupInHand.TryGetComponent(out Rigidbody rb))
-        {
-            rb.isKinematic = true;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
-
-        _cupInHand.layer = LayerMask.NameToLayer("Weapon");
-    }
-
-    private void ThrowCup()
-    {
-        if (!_hasCupInHand || _cupInHand == null) return;
-
-        _cupInHand.layer = LayerMask.NameToLayer("Default");
-        if (_cupInHand.TryGetComponent(out Rigidbody rb))
-        {
-            rb.isKinematic = false;
-            rb.AddForce(transform.forward * _throwForce, ForceMode.Impulse);
-        }
-
-        _cupInHand.transform.SetParent(null);
-        _hasCupInHand = false;
-        _cupInHand = null;
+        _throwItemService.Throw(item, transform.forward);
     }
 }

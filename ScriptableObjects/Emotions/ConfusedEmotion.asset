@@ -27,4 +27,4 @@ MonoBehaviour:
   - <BlendShape>k__BackingField: 14
     <Weight>k__BackingField: 0.3
   defaultIntensity: 1
-  defaultDuration: 0.3
+  defaultDuration: 1
