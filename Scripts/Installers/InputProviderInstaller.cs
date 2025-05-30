@@ -4,6 +4,7 @@ using Zenject;
 public class InputProviderInstaller : MonoInstaller
 {
     [SerializeField] private NewInputProvider _input;
+   // [SerializeField] private ItemManager _itemManagerPrefab;
 
     private void Awake()
     {

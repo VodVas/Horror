@@ -6,13 +6,10 @@ using Cysharp.Threading.Tasks;
 [RequireComponent(typeof(Collider), typeof(AudioSource))]
 public abstract class NPCInteractionHandler : MonoBehaviour
 {
-    [Header("Base Dependencies")]
     [SerializeField] private RectTransform _feedbackElement;
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private AudioSource _moneySound;
     [SerializeField] private FacialExpressionController _facialExpression;
-
-    [Header("Base Animation Configuration")]
     [SerializeField] private FeedbackAnimationData _animationData;
 
     private Vector2 _initialPosition;
@@ -30,7 +27,7 @@ public abstract class NPCInteractionHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.TryGetComponent(out IPickupable _) || _animator.IsAnimating) return;
+        if (!other.TryGetComponent(out IInteractable _) || _animator.IsAnimating) return;
 
         StartCoroutine(InteractionRoutine());
 
