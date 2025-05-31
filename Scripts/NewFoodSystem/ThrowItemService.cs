@@ -1,23 +1,14 @@
 ﻿using UnityEngine;
 
-public sealed class ThrowItemService
+public sealed class ThrowItemService : MonoBehaviour
 {
-    private readonly float _throwForce;
-
-    public ThrowItemService(float throwForce)
-    {
-        _throwForce = throwForce;
-    }
+    [SerializeField] private float _throwForce = 10f;
 
     public void Throw(GameObject item, Vector3 direction)
     {
-        if (item == null) return;
-
         if (item.TryGetComponent<Rigidbody>(out var rb))
         {
-            rb.isKinematic = false;
             rb.AddForce(direction * _throwForce, ForceMode.Impulse);
         }
     }
 }
-

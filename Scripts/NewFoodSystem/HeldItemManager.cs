@@ -1,52 +1,46 @@
 ﻿using UnityEngine;
 
-public sealed class HeldItemManager
+public sealed class HeldItemManager : MonoBehaviour
 {
-    private GameObject _itemInHand;
-    private readonly Transform _holdPosition;
-    private const string WeaponLayer = "Weapon";
-    private const string DefaultLayer = "Default";
+    [SerializeField] private Transform _holdPosition;
+
+    private Food _itemInHand;
+
+    private void Update()
+    {
+        Debug.Log("gameObject.name  " + gameObject.name + "HasItem " + HasItem);
+    }
 
     public bool HasItem => _itemInHand != null;
+    public Food CurrentItem => _itemInHand;
 
-    public HeldItemManager(Transform holdPosition)
+    public bool TryTakeItem(Food item)
     {
-        _holdPosition = holdPosition;
-    }
+        if (_itemInHand != null) return false;
 
-    public void TakeItem(GameObject item)
-    {
+        if (!item.CanInteract) return false;
+
         _itemInHand = item;
-
-        ConfigureItemInHand();
+        ConfigureItemInHand(item);
+        return true;
     }
 
-    private void ConfigureItemInHand()
-    {
-        _itemInHand.layer = LayerMask.NameToLayer(WeaponLayer);
-        _itemInHand.transform.SetParent(_holdPosition, false);
-        _itemInHand.transform.localPosition = Vector3.zero;
-        _itemInHand.transform.localRotation = Quaternion.identity;
-
-        if (_itemInHand.TryGetComponent<Rigidbody>(out var rb))
-        {
-            rb.isKinematic = true;
-        }
-
-        if (_itemInHand.TryGetComponent<Drink>(out _))
-        {
-            _itemInHand.transform.localRotation *= Quaternion.Euler(90f, 0, 0);
-        }
-    }
-
-    public GameObject ReleaseItem()
+    public Food ReleaseItem()
     {
         if (_itemInHand == null) return null;
 
         var item = _itemInHand;
-        _itemInHand.layer = LayerMask.NameToLayer(DefaultLayer);
-        _itemInHand.transform.SetParent(null);
         _itemInHand = null;
+
+        item.transform.SetParent(null);
         return item;
+    }
+
+    private void ConfigureItemInHand(Food item)
+    {
+        item.transform.SetParent(_holdPosition);
+        item.transform.localPosition = Vector3.zero;
+        item.transform.localRotation = Quaternion.identity;
+        item.ChangeState(ItemState.InHand);
     }
 }

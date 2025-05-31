@@ -1,177 +1,5 @@
-﻿//using UnityEngine;
-//using Zenject;
-
-//[RequireComponent(typeof(Camera))]
-//public sealed class PlayerInteraction : MonoBehaviour
-//{
-//    [SerializeField] private float _interactionRadius = 2f;
-//    [SerializeField] private float _interactionAngle = 45f;
-//    [SerializeField] private LayerMask _interactionLayer;
-//    [SerializeField] private LayerMask _obstacleLayer;
-
-//    [Inject] private NewInputProvider _inputProvider;
-
-//    private Camera _camera;
-//    private Collider[] _colliders = new Collider[32];
-
-//    private void Start() => _camera = GetComponent<Camera>();
-
-//    private void Update()
-//    {
-//        if (!_inputProvider.GetPushInput()) return;
-
-//        if (TryFindNearestInteractable(out IInteractable interactable))
-//            interactable.Interact();
-//    }
-
-//    public bool TryFindNearestInteractable(out IInteractable result)
-//    {
-//        result = null;
-//        Vector3 origin = _camera.transform.position;
-//        Vector3 direction = _camera.transform.forward;
-
-//        int count = Physics.OverlapSphereNonAlloc(
-//            origin,
-//            _interactionRadius,
-//            _colliders,
-//            _interactionLayer
-//        );
-
-//        float minSqrDistance = Mathf.Infinity;
-//        for (int i = 0; i < count; i++)
-//        {
-//            Collider col = _colliders[i];
-
-//            if (col == null) continue;
-
-//            Vector3 toCollider = col.transform.position - origin;
-//            float sqrDistance = toCollider.sqrMagnitude;
-//            float angle = Vector3.Angle(direction, toCollider.normalized);
-
-//            if (angle > _interactionAngle) continue;
-
-//            if (Physics.Raycast(origin, toCollider.normalized,
-//                Mathf.Sqrt(sqrDistance), _obstacleLayer)) continue;
-
-//            if (sqrDistance < minSqrDistance &&
-//                col.TryGetComponent(out IInteractable interactable))
-//            {
-//                minSqrDistance = sqrDistance;
-//                result = interactable;
-//            }
-//        }
-//        return result != null;
-//    }
-
-//    private void OnDrawGizmosSelected()
-//    {
-//        if (!_camera) return;
-
-//        Gizmos.color = Color.cyan;
-//        Gizmos.DrawWireSphere(_camera.transform.position, _interactionRadius);
-
-//        Vector3 origin = _camera.transform.position;
-//        Vector3 forward = _camera.transform.forward;
-//        Vector3 left = Quaternion.AngleAxis(-_interactionAngle, Vector3.up) * forward;
-//        Vector3 right = Quaternion.AngleAxis(_interactionAngle, Vector3.up) * forward;
-
-//        Gizmos.DrawRay(origin, left * _interactionRadius);
-//        Gizmos.DrawRay(origin, right * _interactionRadius);
-//        Gizmos.DrawRay(origin, forward * _interactionRadius);
-//    }
-//}
-
-
-
-
-
-
-
-
-
-
-
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
-
-//public sealed class PlayerInteraction : MonoBehaviour
-//{
-//    [SerializeField] private float _interactionRadius = 2f;
-//    [SerializeField] private float _interactionAngle = 30f;
-//    [SerializeField] private LayerMask _interactionLayer;
-//    [SerializeField] private LayerMask _obstacleLayer;
-//    [SerializeField] private Camera _camera;
-
-//    [Inject] private NewInputProvider _inputProvider;
-
-//    private readonly Collider[] _colliders = new Collider[32];
-
-//    private void Update()
-//    {
-//        if (!_inputProvider.GetPushInput()) return;
-
-//        if (TryFindNearestInteractable(out IInteractable interactable))
-//        {
-//            interactable.Interact();
-//        }
-//    }
-
-//    public bool TryFindNearestInteractable(out IInteractable result)
-//    {
-//        result = null;
-//        Vector3 origin = _camera.transform.position;
-//        Vector3 direction = _camera.transform.forward;
-
-//        int count = Physics.OverlapSphereNonAlloc(origin, _interactionRadius, _colliders, _interactionLayer);
-
-//        float minSqrDistance = Mathf.Infinity;
-//        for (int i = 0; i < count; i++)
-//        {
-//            Collider col = _colliders[i];
-//            if (col == null) continue;
-
-//            Vector3 toCollider = col.transform.position - origin;
-//            float sqrDistance = toCollider.sqrMagnitude;
-//            float angle = Vector3.Angle(direction, toCollider.normalized);
-
-//            if (angle > _interactionAngle) continue;
-//            if (Physics.Raycast(origin, toCollider.normalized, Mathf.Sqrt(sqrDistance), _obstacleLayer)) continue;
-//            //float raycastOffset = 0.2f; // Небольшой отступ от камеры
-//            //if (Physics.Raycast(origin + direction * raycastOffset, toCollider, toCollider.magnitude - raycastOffset, _obstacleLayer))
-//              //  continue;
-
-//            if (sqrDistance < minSqrDistance && col.TryGetComponent(out IInteractable interactable))
-//            {
-//                minSqrDistance = sqrDistance;
-//                result = interactable;
-//            }
-//        }
-//        return result != null;
-//    }
-
-//    private void OnDrawGizmosSelected()
-//    {
-//        if (!_camera) return;
-
-//        // Полупрозрачная сфера
-//        Gizmos.color = new Color(0, 1, 1, 0.2f); // голубой с прозрачностью
-//        Gizmos.DrawMesh(_debugSphereMesh, _camera.transform.position);
-
-//        // Лучи угла обзора
-//        Vector3 origin = _camera.transform.position;
-//        Vector3 forward = _camera.transform.forward;
-//        Vector3 left = Quaternion.AngleAxis(-_interactionAngle, Vector3.up) * forward;
-//        Vector3 right = Quaternion.AngleAxis(_interactionAngle, Vector3.up) * forward;
-
-//        Gizmos.color = Color.yellow;
-//        Gizmos.DrawRay(origin, left * _interactionRadius);
-//        Gizmos.DrawRay(origin, right * _interactionRadius);
-//        Gizmos.DrawRay(origin, forward * _interactionRadius);
-//    }
-//}
-
-
-
 
 public sealed class PlayerInteraction : MonoBehaviour
 {
@@ -182,31 +10,70 @@ public sealed class PlayerInteraction : MonoBehaviour
     [SerializeField] private LayerMask _interactionLayer;
     [SerializeField] private LayerMask _obstacleLayer;
     [SerializeField] private Camera _camera;
+    [SerializeField] private HeldItemManager _heldItemManager;
+
+    private enum DetectionType { Raycast , Spherecast };
 
     [Inject] private NewInputProvider _inputProvider;
 
-    private readonly Collider[] _colliders = new Collider[302];
+    private readonly Collider[] _colliders = new Collider[32];
+    private IInteractable[] _playerInteractables;
 
-    private enum DetectionType { Raycast, Spherecast }
+    private void Awake()
+    {
+        _playerInteractables = GetComponentsInChildren<IInteractable>();
+    }
 
     private void Update()
     {
         if (!_inputProvider.GetPushInput()) return;
 
-        if (TryFindNearestInteractable(out IInteractable interactable))
+        if (_heldItemManager.HasItem)
         {
-            interactable.Interact();
+            if (TryFindPlayerInteractable(out IInteractable thrower) && thrower is ItemThrower)
+            {
+                thrower.Interact();
+                return;
+            }
+        }
+        else
+        {
+            if (TryFindNearestWorldInteractable(out IInteractable worldInteractable))
+            {
+                worldInteractable.Interact();
+                return;
+            }
+        }
+
+        if (TryFindPlayerInteractable(out IInteractable fallbackInteractable))
+        {
+            fallbackInteractable.Interact();
         }
     }
 
-    public bool TryFindNearestInteractable(out IInteractable result)
+    private bool TryFindPlayerInteractable(out IInteractable result)
+    {
+        result = null;
+
+        foreach (var interactable in _playerInteractables)
+        {
+            if (interactable?.CanInteract == true)
+            {
+                result = interactable;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool TryFindNearestWorldInteractable(out IInteractable result)
     {
         result = null;
         Vector3 origin = _camera.transform.position;
         Vector3 direction = _camera.transform.forward;
 
         int count = Physics.OverlapSphereNonAlloc(origin, _interactionRadius, _colliders, _interactionLayer);
-
         float minSqrDistance = Mathf.Infinity;
 
         for (int i = 0; i < count; i++)
@@ -221,49 +88,36 @@ public sealed class PlayerInteraction : MonoBehaviour
             if (angle > _interactionAngle) continue;
 
             float distance = Mathf.Sqrt(sqrDistance);
-            bool hasObstacle = false;
-
-            // Выбор метода обнаружения
-            if (_detectionType == DetectionType.Raycast)
-            {
-                hasObstacle = Physics.Raycast(
-                    origin,
-                    toCollider.normalized,
-                    distance,
-                    _obstacleLayer);
-            }
-            else
-            {
-                hasObstacle = Physics.SphereCast(
-                    origin,
-                    _spherecastRadius,
-                    toCollider.normalized,
-                    out RaycastHit hit,
-                    distance,
-                    _obstacleLayer);
-            }
+            bool hasObstacle = CheckForObstacle(origin, toCollider.normalized, distance);
 
             if (hasObstacle) continue;
 
-            if (sqrDistance < minSqrDistance && col.TryGetComponent(out IInteractable interactable))
+            if (sqrDistance < minSqrDistance &&
+                col.TryGetComponent(out IInteractable interactable) &&
+                interactable.CanInteract)
             {
                 minSqrDistance = sqrDistance;
                 result = interactable;
             }
         }
+
         return result != null;
     }
 
+    private bool CheckForObstacle(Vector3 origin, Vector3 direction, float distance)
+    {
+        return _detectionType == DetectionType.Raycast
+            ? Physics.Raycast(origin, direction, distance, _obstacleLayer)
+            : Physics.SphereCast(origin, _spherecastRadius, direction, out _, distance, _obstacleLayer);
+    }
 
     private void OnDrawGizmosSelected()
     {
         if (!_camera) return;
 
-        // Базовая визуализация
         Gizmos.color = new Color(0, 1, 1, 0.2f);
         Gizmos.DrawWireSphere(_camera.transform.position, _interactionRadius);
 
-        // Визуализация угла
         Vector3 origin = _camera.transform.position;
         Vector3 forward = _camera.transform.forward;
         Vector3 left = Quaternion.AngleAxis(-_interactionAngle, Vector3.up) * forward;
@@ -274,13 +128,10 @@ public sealed class PlayerInteraction : MonoBehaviour
         Gizmos.DrawRay(origin, right * _interactionRadius);
         Gizmos.DrawRay(origin, forward * _interactionRadius);
 
-        // Визуализация Spherecast
         if (_detectionType == DetectionType.Spherecast)
         {
             Gizmos.color = Color.magenta;
             Vector3 endPoint = origin + forward * _interactionRadius;
-
-            // Капсула для визуализации
             DrawSpherecastGizmo(origin, endPoint, _spherecastRadius);
         }
     }
@@ -300,5 +151,4 @@ public sealed class PlayerInteraction : MonoBehaviour
         Gizmos.DrawLine(start + perpendicular, end + perpendicular);
         Gizmos.DrawLine(start - perpendicular, end - perpendicular);
     }
-
 }

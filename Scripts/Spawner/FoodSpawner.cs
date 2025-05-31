@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Pool;
 using Zenject;
+using System.Collections.Generic;
 
 public class FoodSpawner : MonoBehaviour, IFoodSpawner
 {
@@ -9,16 +9,16 @@ public class FoodSpawner : MonoBehaviour, IFoodSpawner
 
     [Inject] private DiContainer _container;
 
-    private readonly Dictionary<ItemType, Food> _prefabs = new Dictionary<ItemType, Food>();
-    private readonly Dictionary<ItemType, ObjectPool<Food>> _pools = new Dictionary<ItemType, ObjectPool<Food>>();
+    private readonly Dictionary<ItemType, Food> _prefabs = new();
+    private readonly Dictionary<ItemType, ObjectPool<Food>> _pools = new();
 
-    void Awake()
+    private void Awake()
     {
         InitializePrefabs();
         InitializePools();
     }
 
-    void InitializePrefabs()
+    private void InitializePrefabs()
     {
         foreach (var mapping in _prefabMappings)
         {
@@ -26,7 +26,7 @@ public class FoodSpawner : MonoBehaviour, IFoodSpawner
         }
     }
 
-    void InitializePools()
+    private void InitializePools()
     {
         foreach (var kvp in _prefabs)
         {
@@ -46,6 +46,7 @@ public class FoodSpawner : MonoBehaviour, IFoodSpawner
 
         var food = pool.Get();
         food.transform.position = position;
+        food.ChangeState(ItemState.Available);
         return food.gameObject;
     }
 
@@ -60,7 +61,7 @@ public class FoodSpawner : MonoBehaviour, IFoodSpawner
         }
     }
 
-    Food CreateFood(ItemType type)
+    private Food CreateFood(ItemType type)
     {
         if (!_prefabs.TryGetValue(type, out var prefab)) return null;
 
@@ -69,18 +70,17 @@ public class FoodSpawner : MonoBehaviour, IFoodSpawner
         return instance;
     }
 
-    void OnGetFromPool(Food food)
+    private void OnGetFromPool(Food food)
     {
         food.gameObject.SetActive(true);
-        food.ResetState();
     }
 
-    void OnReleaseToPool(Food food)
+    private void OnReleaseToPool(Food food)
     {
-        food.gameObject.SetActive(false);
+        food.ResetForPool();
     }
 
-    void OnDestroyFood(Food food)
+    private void OnDestroyFood(Food food)
     {
         if (food != null)
         {
@@ -89,13 +89,13 @@ public class FoodSpawner : MonoBehaviour, IFoodSpawner
         }
     }
 
-    void HandleFoodTerminated(ITerminatable terminatable)
+    private void HandleFoodTerminated(ITerminatable terminatable)
     {
         if (terminatable is Food food)
             ReturnItem(food.gameObject);
     }
 
-    ItemType GetItemType(Food food)
+    private ItemType GetItemType(Food food)
     {
         return food switch
         {

@@ -47,15 +47,18 @@ public class MicrowaveDoorController : MonoBehaviour, IInteractable
     [SerializeField] private MicrowaveController _microwaveController;
     [SerializeField] private float _animationDuration = 1f;
     [SerializeField] private Ease movementEase = Ease.Linear;
+    [SerializeField] private float _targetAngle = 90f;
 
     private Quaternion _closedRotation;
     private Quaternion _openRotation;
     private Tweener _doorTween;
 
+    public bool CanInteract => true;
+
     private void Awake()
     {
         _closedRotation = transform.rotation;
-        _openRotation = _closedRotation * Quaternion.Euler(0, 90, 0);
+        _openRotation = _closedRotation * Quaternion.Euler(0, _targetAngle, 0);
     }
 
     private void OnDestroy() => _doorTween?.Kill();
