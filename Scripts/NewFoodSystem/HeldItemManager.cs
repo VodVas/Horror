@@ -6,11 +6,6 @@ public sealed class HeldItemManager : MonoBehaviour
 
     private Food _itemInHand;
 
-    private void Update()
-    {
-        Debug.Log("gameObject.name  " + gameObject.name + "HasItem " + HasItem);
-    }
-
     public bool HasItem => _itemInHand != null;
     public Food CurrentItem => _itemInHand;
 

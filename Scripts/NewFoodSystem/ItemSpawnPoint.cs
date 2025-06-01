@@ -9,6 +9,8 @@ public class ItemSpawnPoint : MonoBehaviour, IInteractable
 
     public bool CanInteract => true;
 
+    public Transform Transform => GetComponent<Transform>();
+
     public void Interact()
     {
         OnSpawnRequested?.Invoke(itemType, transform.position);

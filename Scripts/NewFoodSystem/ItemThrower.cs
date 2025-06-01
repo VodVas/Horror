@@ -8,6 +8,8 @@ public sealed class ItemThrower : MonoBehaviour, IInteractable
 
     public bool CanInteract => _heldItemManager.HasItem;
 
+    public Transform Transform => null;
+
     private void Awake()
     {
         if (_throwDirection == null) _throwDirection = transform;
