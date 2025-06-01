@@ -9,7 +9,11 @@ public class NPCInteractionHeadHandler : NPCInteractionHandler
     private void OnValidate()
     {
         if (_headEmotionPreset == null || _headSoundPlayer == null)
+        {
             Debug.Log("Dependencies not assigned", this);
+            enabled = false;
+            return;
+        }
     }
 #endif
 

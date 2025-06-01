@@ -18,7 +18,6 @@ public abstract class Food : MonoBehaviour, ITerminatable, IItemStateManager, II
     public abstract ItemType ItemType { get; }
     public ItemState CurrentState => _currentState;
     public virtual bool CanInteract => _currentState == ItemState.Available || _currentState == ItemState.Thrown;
-
     public Transform Transform => GetComponent<Transform>();
 
     protected virtual void Awake()
@@ -46,6 +45,7 @@ public abstract class Food : MonoBehaviour, ITerminatable, IItemStateManager, II
         ChangeState(ItemState.InPool);
         transform.SetParent(null);
         StopAllCoroutines();
+        ResetSpecificState();
     }
 
     public void ReturnToPool()
@@ -108,6 +108,8 @@ public abstract class Food : MonoBehaviour, ITerminatable, IItemStateManager, II
         if (_rigidbody) _rigidbody.isKinematic = false;
         if (_collider) _collider.enabled = true;
     }
+
+    protected virtual void ResetSpecificState() { }
 
     protected virtual void OnConfigureInHand() { }
 }

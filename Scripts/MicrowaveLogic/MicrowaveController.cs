@@ -79,24 +79,20 @@ public sealed class MicrowaveController : MonoBehaviour
 
     public void RequestToggleDoor()
     {
-        Debug.Log("RequestToggleDoor()");
         if (IsCooking) return;
 
         switch (_currentState)
         {
             case MicrowaveState.DoorClosed:
-                Debug.Log("MicrowaveState.DoorClosed:");
                 SetState(MicrowaveState.DoorOpen);
                 break;
 
             case MicrowaveState.Ready:
-                Debug.Log("MicrowaveState.Ready:");
                 SetState(MicrowaveState.DoorOpen);
 
                 break;
 
             case MicrowaveState.DoorOpen:
-                Debug.Log("MicrowaveState.DoorOpen:");
                 SetState(MicrowaveState.DoorClosed);
                 break;
         }
@@ -161,8 +157,6 @@ public sealed class MicrowaveController : MonoBehaviour
 
         if (_buttonCollider != null)
             _buttonCollider.enabled = false;
-
-        Debug.Log("Microwave is broken! Button disabled.");
     }
 
     private void PlayBreakSound()
