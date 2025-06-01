@@ -86,7 +86,6 @@ public sealed class MicrowaveController : MonoBehaviour
         {
             case MicrowaveState.DoorClosed:
                 Debug.Log("MicrowaveState.DoorClosed:");
-                //SetState(MicrowaveState.DoorClosed);
                 SetState(MicrowaveState.DoorOpen);
                 break;
 

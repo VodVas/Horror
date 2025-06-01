@@ -102,6 +102,7 @@ public class FoodSpawner : MonoBehaviour, IFoodSpawner
             Cup => ItemType.Cup,
             Drink => ItemType.Drink,
             Sandwich => ItemType.Sandwich,
+            Lid => ItemType.Lid,
             _ => ItemType.Cup
         };
     }

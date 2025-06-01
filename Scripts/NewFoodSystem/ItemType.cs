@@ -2,5 +2,6 @@
 {
     Cup,
     Sandwich,
-    Drink
+    Drink,
+    Lid
 }
