@@ -41,7 +41,7 @@ public abstract class NPCInteractionHandler : MonoBehaviour
     {
         _resetEmotionCts?.Cancel();
         _resetEmotionCts?.Dispose();
-        _animator.StopAnimation();
+        //_animator.StopAnimation();
     }
 
     protected void PlayInteraction(FacialEmotionPreset preset)

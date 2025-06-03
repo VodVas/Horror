@@ -21,9 +21,9 @@ public class VolumeSliderHandler : MonoBehaviour
 
     private void SetupEventTriggers()
     {
-        var trigger = gameObject.AddComponent<EventTrigger>();
+        var trigger = gameObject.AddComponent<UnityEngine.EventSystems.EventTrigger>();
 
-        var beginDragEntry = new EventTrigger.Entry
+        var beginDragEntry = new UnityEngine.EventSystems.EventTrigger.Entry
         {
             eventID = EventTriggerType.BeginDrag
         };
@@ -31,7 +31,7 @@ public class VolumeSliderHandler : MonoBehaviour
         beginDragEntry.callback.AddListener(OnBeginDrag);
         trigger.triggers.Add(beginDragEntry);
 
-        var endDragEntry = new EventTrigger.Entry
+        var endDragEntry = new UnityEngine.EventSystems.EventTrigger.Entry
         {
             eventID = EventTriggerType.EndDrag
         };
@@ -39,7 +39,7 @@ public class VolumeSliderHandler : MonoBehaviour
         endDragEntry.callback.AddListener(OnEndDrag);
         trigger.triggers.Add(endDragEntry);
 
-        var pointerUpEntry = new EventTrigger.Entry
+        var pointerUpEntry = new UnityEngine.EventSystems.EventTrigger.Entry
         {
             eventID = EventTriggerType.PointerUp
         };

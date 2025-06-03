@@ -84,7 +84,7 @@ public abstract class Food : MonoBehaviour, ITerminatable, IItemStateManager, II
     private void ConfigureAvailable()
     {
         gameObject.SetActive(true);
-        gameObject.layer = LayerMask.NameToLayer(Default);
+        SetLayerRecursively(LayerMask.NameToLayer(Default));
         if (_rigidbody)
         {
             _rigidbody.isKinematic = false;
@@ -96,7 +96,7 @@ public abstract class Food : MonoBehaviour, ITerminatable, IItemStateManager, II
 
     private void ConfigureInHand()
     {
-        gameObject.layer = LayerMask.NameToLayer(Weapon);
+        SetLayerRecursively(LayerMask.NameToLayer(Weapon));
         if (_rigidbody) _rigidbody.isKinematic = true;
         if (_collider) _collider.enabled = false;
         OnConfigureInHand();
@@ -104,9 +104,24 @@ public abstract class Food : MonoBehaviour, ITerminatable, IItemStateManager, II
 
     private void ConfigureThrown()
     {
-        gameObject.layer = LayerMask.NameToLayer(Interactable);
+        SetLayerRecursively(LayerMask.NameToLayer(Interactable));
         if (_rigidbody) _rigidbody.isKinematic = false;
         if (_collider) _collider.enabled = true;
+    }
+
+    private void SetLayerRecursively(int layer)
+    {
+        SetLayerRecursively(gameObject, layer);
+    }
+
+    private void SetLayerRecursively(GameObject target, int layer)
+    {
+        target.layer = layer;
+        var transform = target.transform;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            SetLayerRecursively(transform.GetChild(i).gameObject, layer);
+        }
     }
 
     protected virtual void ResetSpecificState() { }

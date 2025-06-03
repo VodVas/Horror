@@ -3,6 +3,7 @@
 public sealed class OptimizedGroundChecker : IGroundChecker
 {
     private static readonly RaycastHit[] HitBuffer = new RaycastHit[8];
+
     private static readonly Vector3[] RayDirections = {
         Vector3.down,
         new Vector3(0.5f, -1f, 0).normalized,
@@ -19,20 +20,20 @@ public sealed class OptimizedGroundChecker : IGroundChecker
     public bool IsGrounded => _isGrounded;
     public Vector3 GroundNormal => _groundNormal;
 
-    public void CheckGround(Vector3 position, float radius, float height, float checkDistance)
+    public void CheckGround(Vector3 position, float radius, float height, float checkDistance, LayerMask groundMask)
     {
         if (Time.time - _lastCheckTime < CHECK_INTERVAL) return;
         _lastCheckTime = Time.time;
 
-        Vector3 sphereCenter = position + Vector3.up * (radius + 0.01f);
+        Vector3 sphereCenter = position + Vector3.down * (height * 0.5f - radius + 0.02f);
 
         int hitCount = Physics.SphereCastNonAlloc(
             sphereCenter,
-            radius * 0.9f,
+            radius * 0.95f,
             Vector3.down,
             HitBuffer,
-            height * 0.5f + checkDistance,
-            -1,
+            checkDistance,
+            groundMask,
             QueryTriggerInteraction.Ignore
         );
 

@@ -19,7 +19,7 @@ public class MovementConfig : ScriptableObject
     [field: SerializeField] public bool CanJump { get; private set; } = true;
     [field: SerializeField] public AudioClip[] FootstepClips { get; private set; }
     [field: SerializeField] public float WalkStepInterval { get; private set; } = 0.5f;
-    [field: SerializeField] public float SprintStepInterval{ get; private set; } = 0.3f;
-    [field: SerializeField, Range(0, 1)] public float FootstepVolume{ get; private set; } = 0.8f;
-    [field: SerializeField] public Vector2 PitchRange{ get; private set; } = new(0.9f, 1.1f);
+    [field: SerializeField] public float SprintStepInterval { get; private set; } = 0.3f;
+    [field: SerializeField, Range(0, 1)] public float FootstepVolume { get; private set; } = 0.8f;
+    [field: SerializeField] public Vector2 PitchRange { get; private set; } = new(0.9f, 1.1f);
 }
