@@ -36,6 +36,9 @@ public class ScreamerActivator : MonoBehaviour
     [SerializeField] private AudioSource _screamAudioSource;
     [SerializeField] private AudioClip _screamSound;
     [SerializeField] private ObjectOnceShaker _cameraShaker;
+    [SerializeField] private ObjectOnceShaker _monsterShaker;
+    [SerializeField] private SkinnedMeshRenderer _bodyMeshRenderer;
+    [SerializeField] private SkinnedMeshRenderer _headMeshRenderer;
 
     private ActivationState _currentState = ActivationState.Idle;
     private Quaternion _initialDoorRotation;
@@ -110,29 +113,24 @@ public class ScreamerActivator : MonoBehaviour
 
     private IEnumerator ActivationSequence()
     {
-        // Step 1: Start closing door
+        ActivateMonster();
         _currentState = ActivationState.ClosingDoor;
         PlayDoorCloseSound();
 
-        // Step 2: Set emotion while door is closing
         SetEmotion();
 
-        // Wait for door to close
         yield return new WaitWhile(() => _currentState == ActivationState.ClosingDoor);
 
-        // Step 3: Wait random delay
         _currentState = ActivationState.WaitingDelay;
         float delay = UnityEngine.Random.Range(_minDelay, _maxDelay);
         yield return new WaitForSeconds(delay);
 
-        // Step 4: Start moving
         PlayScreamSound();
+        //ShakeMonster();
         _currentState = ActivationState.Moving;
 
-        // Wait for movement to complete
         yield return new WaitWhile(() => _currentState == ActivationState.Moving);
 
-        // Sequence completed
         _currentState = ActivationState.Completed;
         OnSequenceCompleted?.Invoke();
     }
@@ -198,6 +196,17 @@ public class ScreamerActivator : MonoBehaviour
         {
             _screamAudioSource.PlayOneShot(_screamSound);
         }
+    }
+
+    private void ShakeMonster()
+    {
+        _monsterShaker.Shake();
+    }
+
+    private void ActivateMonster()
+    {
+        _bodyMeshRenderer.enabled = true;
+        _headMeshRenderer.enabled = true;
     }
 
     private void SetEmotion()

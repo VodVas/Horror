@@ -71,6 +71,15 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""a1045fb8-276c-49cc-85cb-a65a5c7b74b2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -227,6 +236,28 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                     ""action"": ""PushAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""df75ee15-ef52-480a-adbd-664276338eff"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""378bffd4-aaca-45e5-a165-c9227bdc6194"",
+                    ""path"": ""<XInputController>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -240,6 +271,7 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerActions_PushAction = m_PlayerActions.FindAction("PushAction", throwIfNotFound: true);
+        m_PlayerActions_Menu = m_PlayerActions.FindAction("Menu", throwIfNotFound: true);
     }
 
     ~@PlayerMovement()
@@ -311,6 +343,7 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Jump;
     private readonly InputAction m_PlayerActions_Sprint;
     private readonly InputAction m_PlayerActions_PushAction;
+    private readonly InputAction m_PlayerActions_Menu;
     public struct PlayerActionsActions
     {
         private @PlayerMovement m_Wrapper;
@@ -320,6 +353,7 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
         public InputAction @Sprint => m_Wrapper.m_PlayerActions_Sprint;
         public InputAction @PushAction => m_Wrapper.m_PlayerActions_PushAction;
+        public InputAction @Menu => m_Wrapper.m_PlayerActions_Menu;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -344,6 +378,9 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
             @PushAction.started += instance.OnPushAction;
             @PushAction.performed += instance.OnPushAction;
             @PushAction.canceled += instance.OnPushAction;
+            @Menu.started += instance.OnMenu;
+            @Menu.performed += instance.OnMenu;
+            @Menu.canceled += instance.OnMenu;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -363,6 +400,9 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
             @PushAction.started -= instance.OnPushAction;
             @PushAction.performed -= instance.OnPushAction;
             @PushAction.canceled -= instance.OnPushAction;
+            @Menu.started -= instance.OnMenu;
+            @Menu.performed -= instance.OnMenu;
+            @Menu.canceled -= instance.OnMenu;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -387,5 +427,6 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnPushAction(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
     }
 }

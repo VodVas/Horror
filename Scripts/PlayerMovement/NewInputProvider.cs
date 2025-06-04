@@ -13,12 +13,14 @@ public sealed class NewInputProvider : MonoBehaviour, IInputProvider
     private bool _jumpPressed;
     private bool _pushPressed;
     private bool _sprintPressed;
+    private bool _menuPressed;
 
     public Vector2 GetMovementInput() => _movement;
     public Vector2 GetLookInput() => _look;
     public bool GetJumpInput() => ReadButton(ref _jumpPressed);
     public bool GetPushInput() => ReadButton(ref _pushPressed);
     public bool GetSprintInput() => _sprintPressed;
+    public bool GetMenuInput() => ReadButton(ref _menuPressed);
     public bool IsUsingGamepad { get; private set; }
 
     private void Awake()
@@ -46,6 +48,7 @@ public sealed class NewInputProvider : MonoBehaviour, IInputProvider
         _inputActions.PlayerActions.PushAction.started += _ => _pushPressed = true;
         _inputActions.PlayerActions.Sprint.started += _ => _sprintPressed = true;
         _inputActions.PlayerActions.Sprint.canceled += _ => _sprintPressed = false;
+        _inputActions.PlayerActions.Menu.started += _ => _menuPressed = true;
 
         _inputActions.Enable();
     }
