@@ -1,0 +1,177 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59bba6395a76d53499a95451df99ace9, type: 3}
+  m_Name: DemonSoulMarked
+  m_EditorClassIdentifier: 
+  _audioClip: {fileID: 8300000, guid: 94d4655a8037a0b4987d2c590c74ff11, type: 3}
+  _visemes:
+  - Time: 0
+    Viseme: 12
+    Weight: 0.8
+  - Time: 0.12224718
+    Viseme: 13
+    Weight: 0.95
+  - Time: 0.33617976
+    Viseme: 9
+    Weight: 0.7
+  - Time: 0.45842695
+    Viseme: 0
+    Weight: 0
+  - Time: 0.6112359
+    Viseme: 7
+    Weight: 0.7
+  - Time: 0.7334831
+    Viseme: 13
+    Weight: 0.95
+  - Time: 0.94741565
+    Viseme: 8
+    Weight: 0.6
+  - Time: 1.039101
+    Viseme: 0
+    Weight: 0
+  - Time: 1.19191
+    Viseme: 12
+    Weight: 0.8
+  - Time: 1.3752807
+    Viseme: 7
+    Weight: 0.7
+  - Time: 1.497528
+    Viseme: 0
+    Weight: 0
+  - Time: 1.650337
+    Viseme: 10
+    Weight: 1
+  - Time: 1.8337077
+    Viseme: 8
+    Weight: 0.6
+  - Time: 1.9253931
+    Viseme: 9
+    Weight: 0.7
+  - Time: 2.0476403
+    Viseme: 11
+    Weight: 0.9
+  - Time: 2.2310112
+    Viseme: 4
+    Weight: 0.8
+  - Time: 2.3226964
+    Viseme: 12
+    Weight: 0.8
+  - Time: 2.4449437
+    Viseme: 0
+    Weight: 0
+  - Time: 2.5977526
+    Viseme: 1
+    Weight: 0.9
+  - Time: 2.7199998
+    Viseme: 10
+    Weight: 1
+  - Time: 2.9033706
+    Viseme: 9
+    Weight: 0.7
+  - Time: 3.0256178
+    Viseme: 5
+    Weight: 0.85
+  - Time: 3.147865
+    Viseme: 11
+    Weight: 0.9
+  - Time: 3.331236
+    Viseme: 4
+    Weight: 0.8
+  - Time: 3.4229212
+    Viseme: 0
+    Weight: 0
+  - Time: 4.339775
+    Viseme: 3
+    Weight: 0.7
+  - Time: 4.4620223
+    Viseme: 11
+    Weight: 0.9
+  - Time: 4.645393
+    Viseme: 0
+    Weight: 0
+  - Time: 4.798202
+    Viseme: 1
+    Weight: 0.9
+  - Time: 4.9204493
+    Viseme: 13
+    Weight: 0.95
+  - Time: 5.10382
+    Viseme: 4
+    Weight: 0.8
+  - Time: 5.195505
+    Viseme: 12
+    Weight: 0.8
+  - Time: 5.3177524
+    Viseme: 0
+    Weight: 0
+  - Time: 5.4705615
+    Viseme: 12
+    Weight: 0.8
+  - Time: 5.653932
+    Viseme: 7
+    Weight: 0.7
+  - Time: 5.7761793
+    Viseme: 0
+    Weight: 0
+  - Time: 5.9289885
+    Viseme: 12
+    Weight: 0.8
+  - Time: 6.0512357
+    Viseme: 14
+    Weight: 0.9
+  - Time: 6.2346063
+    Viseme: 7
+    Weight: 0.7
+  - Time: 6.3568535
+    Viseme: 4
+    Weight: 0.8
+  - Time: 6.448539
+    Viseme: 0
+    Weight: 0
+  - Time: 6.601348
+    Viseme: 8
+    Weight: 0.6
+  - Time: 6.693033
+    Viseme: 10
+    Weight: 1
+  - Time: 6.876404
+    Viseme: 4
+    Weight: 0.8
+  - Time: 6.968089
+    Viseme: 11
+    Weight: 0.9
+  - Time: 7.1514597
+    Viseme: 0
+    Weight: 0
+  - Time: 7.304269
+    Viseme: 4
+    Weight: 0.8
+  - Time: 7.395954
+    Viseme: 13
+    Weight: 0.95
+  - Time: 7.5793247
+    Viseme: 0
+    Weight: 0
+  - Time: 7.732134
+    Viseme: 5
+    Weight: 0.85
+  - Time: 7.854381
+    Viseme: 8
+    Weight: 0.6
+  - Time: 7.9460664
+    Viseme: 13
+    Weight: 0.95
+  - Time: 8.159999
+    Viseme: 0
+    Weight: 0
+  _transcript: Your soul is already marked. The body is just late to know
+  _wordsPerMinute: 150

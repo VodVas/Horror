@@ -34,7 +34,7 @@ public abstract class Food : MonoBehaviour, ITerminatable, IItemStateManager, II
         ConfigureForState(newState);
     }
 
-    public void Interact()
+    public virtual void Interact()
     {
         if (!CanInteract) return;
         OnInteractionRequested?.Invoke(this);
@@ -122,6 +122,11 @@ public abstract class Food : MonoBehaviour, ITerminatable, IItemStateManager, II
         {
             SetLayerRecursively(transform.GetChild(i).gameObject, layer);
         }
+    }
+
+    protected void RaiseInteractionRequested()
+    {
+        OnInteractionRequested?.Invoke(this);
     }
 
     protected virtual void ResetSpecificState() { }

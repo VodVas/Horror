@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 public class GreetingsTriggerActivator : MonoBehaviour
@@ -7,7 +8,8 @@ public class GreetingsTriggerActivator : MonoBehaviour
     [SerializeField] private AudioPlayer _audioPlayer;
     [SerializeField] private GameObject _secondCutsceneActivator;
     [SerializeField] private BoxCollider _daveBodyCollider;
-
+    [SerializeField] private BoxCollider _daveHeadCollider;
+    [SerializeField] private HybridLipSync _hybridLipSync;
 
     private bool _isGreetingsEnabled = true;
 
@@ -18,10 +20,10 @@ public class GreetingsTriggerActivator : MonoBehaviour
             if (_isGreetingsEnabled)
             {
                 _emoSetter.SetEnterEmotion();
-                _audioPlayer.Play();
+                _hybridLipSync.StartLipSync(_audioPlayer.GetAudioClip());
+                StartCoroutine(Delay(_audioPlayer.GetClipLenght()));
                 _secondCutsceneActivator.SetActive(true);
                 _isGreetingsEnabled = false;
-                _daveBodyCollider.isTrigger = true;
             }
         }
     }
@@ -32,5 +34,13 @@ public class GreetingsTriggerActivator : MonoBehaviour
         {
             _emoSetter.SetExitEmotion();
         }
+    }
+
+    private IEnumerator Delay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        _daveBodyCollider.isTrigger = true;
+        _daveHeadCollider.isTrigger = true;
     }
 }

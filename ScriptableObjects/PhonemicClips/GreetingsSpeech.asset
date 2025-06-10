@@ -1,0 +1,365 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59bba6395a76d53499a95451df99ace9, type: 3}
+  m_Name: GreetingsSpeech
+  m_EditorClassIdentifier: 
+  _audioClip: {fileID: 8300000, guid: bd6ca8ed34b21374ca37cc8e05abc5d2, type: 3}
+  _visemes:
+  - Time: 0
+    Viseme: 10
+    Weight: 1
+  - Time: 0.05464194
+    Viseme: 11
+    Weight: 0.9
+  - Time: 0.16392581
+    Viseme: 0
+    Weight: 0
+  - Time: 0.2549957
+    Viseme: 1
+    Weight: 0.9
+  - Time: 0.32785162
+    Viseme: 10
+    Weight: 1
+  - Time: 0.4371355
+    Viseme: 8
+    Weight: 0.6
+  - Time: 0.49177742
+    Viseme: 0
+    Weight: 0
+  - Time: 0.856057
+    Viseme: 14
+    Weight: 0.9
+  - Time: 0.94712687
+    Viseme: 10
+    Weight: 1
+  - Time: 1.0564108
+    Viseme: 4
+    Weight: 0.8
+  - Time: 1.1110528
+    Viseme: 7
+    Weight: 0.7
+  - Time: 1.1839087
+    Viseme: 0
+    Weight: 0
+  - Time: 1.2749786
+    Viseme: 14
+    Weight: 0.9
+  - Time: 1.3842626
+    Viseme: 1
+    Weight: 0.9
+  - Time: 1.4571185
+    Viseme: 0
+    Weight: 0
+  - Time: 2.003538
+    Viseme: 12
+    Weight: 0.8
+  - Time: 2.1128218
+    Viseme: 0
+    Weight: 0
+  - Time: 2.2038918
+    Viseme: 8
+    Weight: 0.6
+  - Time: 2.2585337
+    Viseme: 11
+    Weight: 0.9
+  - Time: 2.3678176
+    Viseme: 4
+    Weight: 0.8
+  - Time: 2.4224596
+    Viseme: 0
+    Weight: 0
+  - Time: 2.5135295
+    Viseme: 3
+    Weight: 0.7
+  - Time: 2.5863855
+    Viseme: 9
+    Weight: 0.7
+  - Time: 2.6592414
+    Viseme: 11
+    Weight: 0.9
+  - Time: 2.7685254
+    Viseme: 0
+    Weight: 0
+  - Time: 2.8595953
+    Viseme: 10
+    Weight: 1
+  - Time: 2.9142373
+    Viseme: 13
+    Weight: 0.95
+  - Time: 3.0235212
+    Viseme: 4
+    Weight: 0.8
+  - Time: 3.0781631
+    Viseme: 0
+    Weight: 0
+  - Time: 3.169233
+    Viseme: 7
+    Weight: 0.7
+  - Time: 3.242089
+    Viseme: 10
+    Weight: 1
+  - Time: 3.351373
+    Viseme: 8
+    Weight: 0.6
+  - Time: 3.406015
+    Viseme: 4
+    Weight: 0.8
+  - Time: 3.460657
+    Viseme: 14
+    Weight: 0.9
+  - Time: 3.5335128
+    Viseme: 12
+    Weight: 0.8
+  - Time: 3.6427968
+    Viseme: 6
+    Weight: 0.8
+  - Time: 3.7338667
+    Viseme: 11
+    Weight: 0.9
+  - Time: 3.8431506
+    Viseme: 7
+    Weight: 0.7
+  - Time: 3.9160066
+    Viseme: 0
+    Weight: 0
+  - Time: 4.280286
+    Viseme: 3
+    Weight: 0.7
+  - Time: 4.353142
+    Viseme: 9
+    Weight: 0.7
+  - Time: 4.4259977
+    Viseme: 11
+    Weight: 0.9
+  - Time: 4.5352817
+    Viseme: 0
+    Weight: 0
+  - Time: 4.6263514
+    Viseme: 13
+    Weight: 0.95
+  - Time: 4.7356353
+    Viseme: 5
+    Weight: 0.85
+  - Time: 4.808491
+    Viseme: 11
+    Weight: 0.9
+  - Time: 4.917775
+    Viseme: 7
+    Weight: 0.7
+  - Time: 4.990631
+    Viseme: 0
+    Weight: 0
+  - Time: 5.1727705
+    Viseme: 12
+    Weight: 0.8
+  - Time: 5.2456264
+    Viseme: 11
+    Weight: 0.9
+  - Time: 5.3549104
+    Viseme: 10
+    Weight: 1
+  - Time: 5.409552
+    Viseme: 0
+    Weight: 0
+  - Time: 5.7738314
+    Viseme: 3
+    Weight: 0.7
+  - Time: 5.8466873
+    Viseme: 11
+    Weight: 0.9
+  - Time: 5.9559712
+    Viseme: 0
+    Weight: 0
+  - Time: 6.047041
+    Viseme: 10
+    Weight: 1
+  - Time: 6.156325
+    Viseme: 8
+    Weight: 0.6
+  - Time: 6.2109666
+    Viseme: 7
+    Weight: 0.7
+  - Time: 6.2838225
+    Viseme: 0
+    Weight: 0
+  - Time: 6.465962
+    Viseme: 10
+    Weight: 1
+  - Time: 6.575246
+    Viseme: 8
+    Weight: 0.6
+  - Time: 6.6298876
+    Viseme: 4
+    Weight: 0.8
+  - Time: 6.6845293
+    Viseme: 0
+    Weight: 0
+  - Time: 6.775599
+    Viseme: 4
+    Weight: 0.8
+  - Time: 6.8302407
+    Viseme: 14
+    Weight: 0.9
+  - Time: 6.9030967
+    Viseme: 13
+    Weight: 0.95
+  - Time: 7.0123806
+    Viseme: 0
+    Weight: 0
+  - Time: 7.1034503
+    Viseme: 14
+    Weight: 0.9
+  - Time: 7.212734
+    Viseme: 1
+    Weight: 0.9
+  - Time: 7.28559
+    Viseme: 7
+    Weight: 0.7
+  - Time: 7.358446
+    Viseme: 0
+    Weight: 0
+  - Time: 7.449516
+    Viseme: 13
+    Weight: 0.95
+  - Time: 7.5587997
+    Viseme: 2
+    Weight: 0.8
+  - Time: 7.6316557
+    Viseme: 0
+    Weight: 0
+  - Time: 7.7227254
+    Viseme: 10
+    Weight: 1
+  - Time: 7.777367
+    Viseme: 13
+    Weight: 0.95
+  - Time: 7.886651
+    Viseme: 4
+    Weight: 0.8
+  - Time: 7.941293
+    Viseme: 0
+    Weight: 0
+  - Time: 8.032363
+    Viseme: 13
+    Weight: 0.95
+  - Time: 8.141646
+    Viseme: 2
+    Weight: 0.8
+  - Time: 8.287358
+    Viseme: 11
+    Weight: 0.9
+  - Time: 8.396642
+    Viseme: 0
+    Weight: 0
+  - Time: 8.943062
+    Viseme: 13
+    Weight: 0.95
+  - Time: 9.052345
+    Viseme: 10
+    Weight: 1
+  - Time: 9.106987
+    Viseme: 0
+    Weight: 0
+  - Time: 9.471267
+    Viseme: 10
+    Weight: 1
+  - Time: 9.58055
+    Viseme: 8
+    Weight: 0.6
+  - Time: 9.635192
+    Viseme: 4
+    Weight: 0.8
+  - Time: 9.689834
+    Viseme: 0
+    Weight: 0
+  - Time: 9.780904
+    Viseme: 1
+    Weight: 0.9
+  - Time: 9.85376
+    Viseme: 10
+    Weight: 1
+  - Time: 9.963043
+    Viseme: 5
+    Weight: 0.85
+  - Time: 10.035899
+    Viseme: 11
+    Weight: 0.9
+  - Time: 10.145183
+    Viseme: 0
+    Weight: 0
+  - Time: 10.236253
+    Viseme: 12
+    Weight: 0.8
+  - Time: 10.345536
+    Viseme: 4
+    Weight: 0.8
+  - Time: 10.400178
+    Viseme: 0
+    Weight: 0
+  - Time: 10.491248
+    Viseme: 7
+    Weight: 0.7
+  - Time: 10.564104
+    Viseme: 8
+    Weight: 0.6
+  - Time: 10.618746
+    Viseme: 10
+    Weight: 1
+  - Time: 10.728029
+    Viseme: 1
+    Weight: 0.9
+  - Time: 10.873741
+    Viseme: 12
+    Weight: 0.8
+  - Time: 10.946597
+    Viseme: 0
+    Weight: 0
+  - Time: 11.310877
+    Viseme: 12
+    Weight: 0.8
+  - Time: 11.42016
+    Viseme: 1
+    Weight: 0.9
+  - Time: 11.493016
+    Viseme: 0
+    Weight: 0
+  - Time: 11.584086
+    Viseme: 12
+    Weight: 0.8
+  - Time: 11.69337
+    Viseme: 8
+    Weight: 0.6
+  - Time: 11.748012
+    Viseme: 0
+    Weight: 0
+  - Time: 11.839082
+    Viseme: 10
+    Weight: 1
+  - Time: 11.948365
+    Viseme: 0
+    Weight: 0
+  - Time: 12.039435
+    Viseme: 9
+    Weight: 0.7
+  - Time: 12.112291
+    Viseme: 14
+    Weight: 0.9
+  - Time: 12.221575
+    Viseme: 6
+    Weight: 0.8
+  - Time: 12.312645
+    Viseme: 0
+    Weight: 0
+  _transcript: "Hey man, what's up? I need three hot sandwiches, three Cokes \u2014
+    yeah, the cans \u2014 and two cups of hot coffee. Oh, and make it snappy, I\u2019m
+    in a rush!"
+  _wordsPerMinute: 150

@@ -27,6 +27,8 @@ public class CutsceneActivator : MonoBehaviour
     [SerializeField] private EmoSetter _emoSetter;
     [SerializeField] private AudioClip _ambientSound;
 
+    [SerializeField] private HybridLipSync _hybridLipSync;
+
     private int _hitCount = 0;
 
     public event Action EndOf1Scene;
@@ -77,8 +79,9 @@ public class CutsceneActivator : MonoBehaviour
         _emoSetter.SetEnterEmotion();
         yield return new WaitForSeconds(_roundSoundPlayerDuration);
 
-        _audioSource.PlayOneShot(_daveSpeech);
-        yield return new WaitForSeconds(_daveSpeech.length + 0.5f);
+        //_audioSource.PlayOneShot(_daveSpeech);
+        _hybridLipSync.StartLipSync(_daveSpeech);
+        yield return new WaitForSeconds(_daveSpeech.length + 0.2f);
 
         _cutsceneTimeline.SetActive(true);
         _animator?.SetBool(IsRunning, true);

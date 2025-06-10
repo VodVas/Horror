@@ -1,107 +1,107 @@
-﻿public class Test {
-    /*//////using UnityEngine;
-//////using Zenject;
+﻿//public class Test {
+//    /*//////using UnityEngine;
+////////using Zenject;
 
-//////[RequireComponent(typeof(PhysicsItemScanner))]
-//////public sealed class QueueFoodController : MonoBehaviour
-//////{
-//////    [SerializeField] private ItemSpawnPoint[] _targetSpawnPoints;
-//////    [SerializeField] private Transform _itemHoldPosition;
-//////    [SerializeField] private float _throwForce = 10f;
-//////    [SerializeField] private float _pickupRadius = 2f;
-//////    [SerializeField] private float _pickupAngle = 10f;
+////////[RequireComponent(typeof(PhysicsItemScanner))]
+////////public sealed class QueueFoodController : MonoBehaviour
+////////{
+////////    [SerializeField] private ItemSpawnPoint[] _targetSpawnPoints;
+////////    [SerializeField] private Transform _itemHoldPosition;
+////////    [SerializeField] private float _throwForce = 10f;
+////////    [SerializeField] private float _pickupRadius = 2f;
+////////    [SerializeField] private float _pickupAngle = 10f;
 
-//////    [Inject] private NewInputProvider _input;
-//////    [Inject] private IFoodSpawner _foodSpawner;
+////////    [Inject] private NewInputProvider _input;
+////////    [Inject] private IFoodSpawner _foodSpawner;
 
-//////    private ItemScannerService _scannerService;
-//////    private ItemSpawnService _spawnService;
-//////    private PositionalItemGripper _heldItemManager;
-//////    private ThrowItemService _throwItemService;
+////////    private ItemScannerService _scannerService;
+////////    private ItemSpawnService _spawnService;
+////////    private PositionalItemGripper _heldItemManager;
+////////    private ThrowItemService _throwItemService;
 
-//////    private void Awake()
-//////    {
-//////        var physicsScanner = GetComponent<PhysicsItemScanner>();
-//////        _scannerService = gameObject.AddComponent<ItemScannerService>();
-//////        _scannerService.Initialize(physicsScanner);
+////////    private void Awake()
+////////    {
+////////        var physicsScanner = GetComponent<PhysicsItemScanner>();
+////////        _scannerService = gameObject.AddComponent<ItemScannerService>();
+////////        _scannerService.Initialize(physicsScanner);
 
-//////        _spawnService = new ItemSpawnService(_foodSpawner);
-//////        _heldItemManager = new PositionalItemGripper(_itemHoldPosition);
-//////        _throwItemService = new ThrowItemService(_throwForce);
-//////    }
+////////        _spawnService = new ItemSpawnService(_foodSpawner);
+////////        _heldItemManager = new PositionalItemGripper(_itemHoldPosition);
+////////        _throwItemService = new ThrowItemService(_throwForce);
+////////    }
 
-//////    private void Update()
-//////    {
-//////        if (_input.GetPushInput())
-//////        {
-//////            if (_heldItemManager.HasItem)
-//////                ThrowItem();
-//////            else
-//////                TryTakeItem();
-//////        }
-//////    }
+////////    private void Update()
+////////    {
+////////        if (_input.GetPushInput())
+////////        {
+////////            if (_heldItemManager.HasItem)
+////////                ThrowItem();
+////////            else
+////////                TryTakeItem();
+////////        }
+////////    }
 
-//////    private void TryTakeItem()
-//////    {
-//////        var closestSpawn = GetClosestSpawnPoint();
+////////    private void TryTakeItem()
+////////    {
+////////        var closestSpawn = GetClosestSpawnPoint();
 
-//////        if (closestSpawn != null)
-//////        {
-//////            var newItem = _spawnService.SpawnItem(closestSpawn.itemType, _itemHoldPosition.position);
+////////        if (closestSpawn != null)
+////////        {
+////////            var newItem = _spawnService.SpawnItem(closestSpawn.itemType, _itemHoldPosition.position);
 
-//////            if (newItem != null)
-//////            {
-//////                _heldItemManager.TakeItem(newItem);
-//////                return;
-//////            }
-//////        }
+////////            if (newItem != null)
+////////            {
+////////                _heldItemManager.TakeItem(newItem);
+////////                return;
+////////            }
+////////        }
 
-//////        var closestItem = _scannerService.FindNearestPickupable(transform.position, transform.forward, _pickupRadius, _pickupAngle);
+////////        var closestItem = _scannerService.FindNearestPickupable(transform.position, transform.forward, _pickupRadius, _pickupAngle);
 
-//////        if (closestItem != null)
-//////        {
-//////            _heldItemManager.TakeItem(closestItem);
-//////        }
-//////    }
+////////        if (closestItem != null)
+////////        {
+////////            _heldItemManager.TakeItem(closestItem);
+////////        }
+////////    }
 
-//////    private ItemSpawnPoint GetClosestSpawnPoint()
-//////    {
-//////        ItemSpawnPoint closest = null;
-//////        float minDistance = _pickupRadius;
+////////    private ItemSpawnPoint GetClosestSpawnPoint()
+////////    {
+////////        ItemSpawnPoint closest = null;
+////////        float minDistance = _pickupRadius;
 
-//////        for (int i = 0; i < _targetSpawnPoints.Length; i++)
-//////        {
-//////            var spawnPoint = _targetSpawnPoints[i];
+////////        for (int i = 0; i < _targetSpawnPoints.Length; i++)
+////////        {
+////////            var spawnPoint = _targetSpawnPoints[i];
 
-//////            if (spawnPoint == null || !spawnPoint.gameObject.activeSelf) continue;
+////////            if (spawnPoint == null || !spawnPoint.gameObject.activeSelf) continue;
 
-//////            Vector3 toPoint = spawnPoint.transform.position - transform.position;
-//////            float distance = toPoint.sqrMagnitude;
+////////            Vector3 toPoint = spawnPoint.transform.position - transform.position;
+////////            float distance = toPoint.sqrMagnitude;
 
-//////            if (distance > minDistance * minDistance) continue;
+////////            if (distance > minDistance * minDistance) continue;
 
-//////            float angle = Vector3.Angle(transform.forward, toPoint.normalized);
+////////            float angle = Vector3.Angle(transform.forward, toPoint.normalized);
 
-//////            if (angle > _pickupAngle) continue;
+////////            if (angle > _pickupAngle) continue;
 
-//////            if (closest == null || distance < minDistance * minDistance)
-//////            {
-//////                minDistance = Mathf.Sqrt(distance);
-//////                closest = spawnPoint;
-//////            }
-//////        }
+////////            if (closest == null || distance < minDistance * minDistance)
+////////            {
+////////                minDistance = Mathf.Sqrt(distance);
+////////                closest = spawnPoint;
+////////            }
+////////        }
 
-//////        return closest;
-//////    }
+////////        return closest;
+////////    }
 
-//////    private void ThrowItem()
-//////    {
-//////        var item = _heldItemManager.ReleaseItem();
+////////    private void ThrowItem()
+////////    {
+////////        var item = _heldItemManager.ReleaseItem();
 
-//////        if (item == null) return;
+////////        if (item == null) return;
 
-//////        _throwItemService.Throw(item, transform.forward);
-//////    }
-//////}
-*/
-}
+////////        _throwItemService.Throw(item, transform.forward);
+////////    }
+////////}
+//*/
+//}

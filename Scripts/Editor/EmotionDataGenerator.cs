@@ -11,7 +11,7 @@ public static class EmotionDataGenerator
     private const string BasePath = "Assets/_project/ScriptableObjects/Emotions";
     private const string PresetClassName = nameof(FacialExpressionPresets);
 
-    [MenuItem("Tools/Generate Emotion Presets")]
+    [MenuItem("Tools/PhonemicAudioSystem/Generate Emotion Presets")]
     public static void GenerateAll()
     {
         try

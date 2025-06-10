@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+[Serializable]
 public class ItemSpawnPoint : MonoBehaviour, IInteractable
 {
     [field: SerializeField] public ItemType itemType { get; private set; }

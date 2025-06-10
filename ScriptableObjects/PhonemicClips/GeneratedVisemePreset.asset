@@ -1,0 +1,200 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ae596b8eaab66488d49ab9448661dc, type: 3}
+  m_Name: GeneratedVisemePreset
+  m_EditorClassIdentifier: 
+  visemeMappings:
+  - Viseme: 0
+    Weights: []
+    TransitionSpeed: 15
+  - Viseme: 1
+    Weights:
+    - <BlendShape>k__BackingField: 26
+      <Weight>k__BackingField: 0.84821427
+    - <BlendShape>k__BackingField: 35
+      <Weight>k__BackingField: 0.71428573
+    - <BlendShape>k__BackingField: 36
+      <Weight>k__BackingField: 0.71428573
+    - <BlendShape>k__BackingField: 37
+      <Weight>k__BackingField: 0.17857143
+    TransitionSpeed: 12
+  - Viseme: 2
+    Weights:
+    - <BlendShape>k__BackingField: 33
+      <Weight>k__BackingField: 0.4
+    - <BlendShape>k__BackingField: 34
+      <Weight>k__BackingField: 0.4
+    - <BlendShape>k__BackingField: 47
+      <Weight>k__BackingField: 0.5
+    - <BlendShape>k__BackingField: 48
+      <Weight>k__BackingField: 0.5
+    - <BlendShape>k__BackingField: 31
+      <Weight>k__BackingField: 0.3
+    - <BlendShape>k__BackingField: 24
+      <Weight>k__BackingField: 0.15
+    TransitionSpeed: 10
+  - Viseme: 3
+    Weights:
+    - <BlendShape>k__BackingField: 24
+      <Weight>k__BackingField: 0.3
+    - <BlendShape>k__BackingField: 45
+      <Weight>k__BackingField: 0.2
+    - <BlendShape>k__BackingField: 46
+      <Weight>k__BackingField: 0.2
+    TransitionSpeed: 10
+  - Viseme: 4
+    Weights:
+    - <BlendShape>k__BackingField: 24
+      <Weight>k__BackingField: 0.25
+    - <BlendShape>k__BackingField: 27
+      <Weight>k__BackingField: 0.15
+    - <BlendShape>k__BackingField: 28
+      <Weight>k__BackingField: 0.15
+    TransitionSpeed: 12
+  - Viseme: 5
+    Weights:
+    - <BlendShape>k__BackingField: 24
+      <Weight>k__BackingField: 0.35
+    - <BlendShape>k__BackingField: 31
+      <Weight>k__BackingField: 0.2
+    - <BlendShape>k__BackingField: 33
+      <Weight>k__BackingField: 0.2
+    - <BlendShape>k__BackingField: 34
+      <Weight>k__BackingField: 0.2
+    TransitionSpeed: 11
+  - Viseme: 6
+    Weights:
+    - <BlendShape>k__BackingField: 37
+      <Weight>k__BackingField: 0.6
+    - <BlendShape>k__BackingField: 31
+      <Weight>k__BackingField: 0.5
+    - <BlendShape>k__BackingField: 24
+      <Weight>k__BackingField: 0.2
+    - <BlendShape>k__BackingField: 47
+      <Weight>k__BackingField: 0.3
+    - <BlendShape>k__BackingField: 48
+      <Weight>k__BackingField: 0.3
+    TransitionSpeed: 10
+  - Viseme: 7
+    Weights:
+    - <BlendShape>k__BackingField: 43
+      <Weight>k__BackingField: 0.3
+    - <BlendShape>k__BackingField: 44
+      <Weight>k__BackingField: 0.3
+    - <BlendShape>k__BackingField: 24
+      <Weight>k__BackingField: 0.1
+    - <BlendShape>k__BackingField: 27
+      <Weight>k__BackingField: 0.2
+    - <BlendShape>k__BackingField: 28
+      <Weight>k__BackingField: 0.2
+    TransitionSpeed: 10
+  - Viseme: 8
+    Weights:
+    - <BlendShape>k__BackingField: 24
+      <Weight>k__BackingField: 0.15
+    - <BlendShape>k__BackingField: 49
+      <Weight>k__BackingField: 0.1
+    - <BlendShape>k__BackingField: 50
+      <Weight>k__BackingField: 0.1
+    TransitionSpeed: 11
+  - Viseme: 9
+    Weights:
+    - <BlendShape>k__BackingField: 37
+      <Weight>k__BackingField: 0.4
+    - <BlendShape>k__BackingField: 31
+      <Weight>k__BackingField: 0.3
+    - <BlendShape>k__BackingField: 24
+      <Weight>k__BackingField: 0.2
+    - <BlendShape>k__BackingField: 40
+      <Weight>k__BackingField: 0.2
+    - <BlendShape>k__BackingField: 39
+      <Weight>k__BackingField: 0.2
+    TransitionSpeed: 10
+  - Viseme: 10
+    Weights:
+    - <BlendShape>k__BackingField: 24
+      <Weight>k__BackingField: 0.7
+    - <BlendShape>k__BackingField: 33
+      <Weight>k__BackingField: 0.5
+    - <BlendShape>k__BackingField: 34
+      <Weight>k__BackingField: 0.5
+    - <BlendShape>k__BackingField: 45
+      <Weight>k__BackingField: 0.3
+    - <BlendShape>k__BackingField: 46
+      <Weight>k__BackingField: 0.3
+    TransitionSpeed: 8
+  - Viseme: 11
+    Weights:
+    - <BlendShape>k__BackingField: 43
+      <Weight>k__BackingField: 0.5660378
+    - <BlendShape>k__BackingField: 44
+      <Weight>k__BackingField: 0.5660378
+    - <BlendShape>k__BackingField: 24
+      <Weight>k__BackingField: 0.23584905
+    - <BlendShape>k__BackingField: 45
+      <Weight>k__BackingField: 0.3773585
+    - <BlendShape>k__BackingField: 46
+      <Weight>k__BackingField: 0.3773585
+    - <BlendShape>k__BackingField: 27
+      <Weight>k__BackingField: 0.18867925
+    - <BlendShape>k__BackingField: 28
+      <Weight>k__BackingField: 0.18867925
+    TransitionSpeed: 8
+  - Viseme: 12
+    Weights:
+    - <BlendShape>k__BackingField: 43
+      <Weight>k__BackingField: 0.4
+    - <BlendShape>k__BackingField: 44
+      <Weight>k__BackingField: 0.4
+    - <BlendShape>k__BackingField: 24
+      <Weight>k__BackingField: 0.15
+    - <BlendShape>k__BackingField: 45
+      <Weight>k__BackingField: 0.5
+    - <BlendShape>k__BackingField: 46
+      <Weight>k__BackingField: 0.5
+    - <BlendShape>k__BackingField: 6
+      <Weight>k__BackingField: 0.1
+    - <BlendShape>k__BackingField: 7
+      <Weight>k__BackingField: 0.1
+    TransitionSpeed: 8
+  - Viseme: 13
+    Weights:
+    - <BlendShape>k__BackingField: 37
+      <Weight>k__BackingField: 0.67796606
+    - <BlendShape>k__BackingField: 31
+      <Weight>k__BackingField: 0.5932203
+    - <BlendShape>k__BackingField: 24
+      <Weight>k__BackingField: 0.3813559
+    - <BlendShape>k__BackingField: 39
+      <Weight>k__BackingField: 0.2542373
+    - <BlendShape>k__BackingField: 40
+      <Weight>k__BackingField: 0.2542373
+    - <BlendShape>k__BackingField: 41
+      <Weight>k__BackingField: 0.16949151
+    - <BlendShape>k__BackingField: 42
+      <Weight>k__BackingField: 0.16949151
+    TransitionSpeed: 8
+  - Viseme: 14
+    Weights:
+    - <BlendShape>k__BackingField: 37
+      <Weight>k__BackingField: 0.8035714
+    - <BlendShape>k__BackingField: 31
+      <Weight>k__BackingField: 0.71428573
+    - <BlendShape>k__BackingField: 24
+      <Weight>k__BackingField: 0.17857143
+    - <BlendShape>k__BackingField: 26
+      <Weight>k__BackingField: 0.26785716
+    - <BlendShape>k__BackingField: 41
+      <Weight>k__BackingField: 0.26785716
+    - <BlendShape>k__BackingField: 42
+      <Weight>k__BackingField: 0.26785716
+    TransitionSpeed: 8

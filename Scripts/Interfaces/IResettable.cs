@@ -1,4 +1,4 @@
-﻿public interface IResettable
-{
-    void ResetState();
-}
+﻿//public interface IResettable
+//{
+//    void ResetState();
+//}

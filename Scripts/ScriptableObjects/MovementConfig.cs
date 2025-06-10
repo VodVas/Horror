@@ -22,4 +22,9 @@ public class MovementConfig : ScriptableObject
     [field: SerializeField] public float SprintStepInterval { get; private set; } = 0.3f;
     [field: SerializeField, Range(0, 1)] public float FootstepVolume { get; private set; } = 0.8f;
     [field: SerializeField] public Vector2 PitchRange { get; private set; } = new(0.9f, 1.1f);
+
+    public void SetMouseSensitivity(float value)
+    {
+        MouseSensitivity = Mathf.Clamp(value, 0.1f, 1000f);
+    }
 }

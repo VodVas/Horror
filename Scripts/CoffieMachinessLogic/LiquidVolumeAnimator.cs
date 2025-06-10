@@ -19,6 +19,11 @@ public class LiquidVolumeAnimator : MonoBehaviour
         CancelActiveAnimation();
     }
 
+    public void ResetToEmpty()
+    {
+        _liquidVolume.level = 0.1f;
+    }
+
     public void AnimateFill(float targetLevel, float duration)
     {
         CancelActiveAnimation();

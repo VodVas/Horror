@@ -26,9 +26,16 @@ public class AudioPlayer : MonoBehaviour
         _cutsceneActivator.EndOf1Scene -= PlayOnEvent;
     }
 
-    public void Play()
+    public float GetClipLenght()
     {
-        _audioSource.PlayOneShot(_audioClip);
+        //_audioSource.PlayOneShot(_audioClip);
+
+        return _audioClip.length;
+    }
+
+    public AudioClip GetAudioClip()
+    {
+        return _audioClip;
     }
 
     public void PlayOnEvent()
