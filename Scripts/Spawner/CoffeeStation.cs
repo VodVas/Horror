@@ -7,7 +7,6 @@ public class CoffeeStation : MonoBehaviour
 {
     [Header("Cup Positioning")]
     [SerializeField] private Transform _cupSnapPoint;
-    [SerializeField] private float _snapSpeed = 5f;
     [SerializeField] private float _snapDistance = 0.5f;
 
     [Header("Coffee Machine")]
