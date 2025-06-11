@@ -77,13 +77,15 @@ public abstract class NPCInteractionHandler : MonoBehaviour
             if (shouldGiveReward)
             {
                 PlayMoneyEffects();
+                ReturnFoodToPool(other);
 
                 await UniTask.WhenAll(
                     PlayFeedbackAnimation(_interactionCts.Token),
                     PlayDialogue(_interactionCts.Token)
                 );
-            }
 
+                return;
+            }
 
             ReturnFoodToPool(other);
         }
@@ -98,11 +100,6 @@ public abstract class NPCInteractionHandler : MonoBehaviour
         if (other.TryGetComponent(out IRewardableFood rewardableFood))
         {
             return rewardableFood.IsRewardable();
-        }
-
-        if (other.TryGetComponent(out IValidatable validatable))
-        {
-            return validatable.IsValidProduct();
         }
 
         return false;

@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 
-public class Drink : Food
+public class Drink : Food, IRewardableFood
 {
     public override ItemType ItemType => ItemType.Drink;
+
+    public bool IsRewardable()
+    {
+        return true;
+    }
 
     protected override void OnConfigureInHand()
     {

@@ -1,4 +1,6 @@
-﻿public class Sandwich : Food, IRewardableFood
+﻿using UnityEngine;
+
+public class Sandwich : Food, IRewardableFood
 {
     private bool _isHeated = false;
 
@@ -12,6 +14,7 @@
     public void MarkAsHeated()
     {
         _isHeated = true;
+        Debug.Log("MarkAsHeated()" + _isHeated);
     }
 
     protected override void ResetSpecificState()

@@ -14,6 +14,7 @@ public class CoffeeMachinesController : MonoBehaviour, IInteractable
 
     [Header("Coffee Settings")]
     [SerializeField] private GameObject _coffeeStream;
+    [SerializeField] private GameObject _coffeeStream2;
     [SerializeField] private float _cookingDuration = 3f;
 
     [Header("Sound Settings")]
@@ -23,11 +24,15 @@ public class CoffeeMachinesController : MonoBehaviour, IInteractable
 
     private CancellationTokenSource _cookingCts;
     private bool _isCooking;
+    private bool _hasCupInserted;
+    private bool _isCupFilled;
     private Tweener _currentTween;
     private Vector3 _initialHandleRotation;
 
-    public bool CanInteract => !_isCooking;
+    public bool CanInteract => _hasCupInserted && !_isCooking && !_isCupFilled;
     public Transform Transform => transform;
+
+    public event Action OnCoffeeComplete;
 
     private void Awake()
     {
@@ -38,15 +43,16 @@ public class CoffeeMachinesController : MonoBehaviour, IInteractable
             return;
         }
 
-        if (_coffeeStream == null)
+        if (_coffeeStream == null || _coffeeStream2 == null)
         {
-            Debug.LogError("[CoffeeMachine] Coffee stream not assigned", this);
+            Debug.LogError("[CoffeeMachine] Coffee streams not assigned", this);
             enabled = false;
             return;
         }
 
         _initialHandleRotation = _handle.localEulerAngles;
         _coffeeStream.SetActive(false);
+        _coffeeStream2.SetActive(false);
     }
 
     private void OnDestroy()
@@ -57,7 +63,22 @@ public class CoffeeMachinesController : MonoBehaviour, IInteractable
         StopAllSounds();
     }
 
-    public void Interact() => StartCoffeeMaking().Forget();
+    public void Interact()
+    {
+        if (!CanInteract) return;
+        StartCoffeeMaking().Forget();
+    }
+
+    public void SetCupState(bool inserted, bool filled = false)
+    {
+        _hasCupInserted = inserted;
+        _isCupFilled = filled;
+
+        if (!inserted)
+        {
+            _isCupFilled = false;
+        }
+    }
 
     private async UniTaskVoid StartCoffeeMaking()
     {
@@ -70,17 +91,23 @@ public class CoffeeMachinesController : MonoBehaviour, IInteractable
             await AnimateHandle(true);
             PlayPouringSound();
             _coffeeStream.SetActive(true);
+            _coffeeStream2.SetActive(true);
 
             await UniTask.Delay(TimeSpan.FromSeconds(_cookingDuration),
                 cancellationToken: _cookingCts.Token);
 
             _coffeeStream.SetActive(false);
+            _coffeeStream2.SetActive(false);
             StopPouringSound();
             await AnimateHandle(false);
+
+            _isCupFilled = true;
+            OnCoffeeComplete?.Invoke();
         }
         catch (OperationCanceledException)
         {
             _coffeeStream.SetActive(false);
+            _coffeeStream2.SetActive(false);
             StopPouringSound();
             await AnimateHandle(false, true);
         }

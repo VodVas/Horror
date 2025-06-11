@@ -1,41 +1,3 @@
-////using UnityEngine;
-
-////public class Cup : Food
-////{
-////    [SerializeField] private Transform _selfLid;
-
-////    public override ItemType ItemType => ItemType.Cup;
-
-////    protected override void Awake()
-////    {
-////        base.Awake();
-
-////        if (_selfLid == null)
-////        {
-////            Debug.Log("Transform lid not Assign", this);
-////            enabled = false;
-////            return;
-////        }
-////    }
-
-////    private void OnTriggerEnter(Collider other)
-////    {
-////        if (other.TryGetComponent(out Lid lid))
-////        {
-////            _selfLid.gameObject.SetActive(true);
-
-////            lid.TryGetComponent(out Food food);
-////            {
-////                food.ReturnToPool();
-////            }
-////        }
-////    }
-
-////    protected override void ResetSpecificState()
-////    {
-////        _selfLid.gameObject.SetActive(false);
-////    }
-////}
 //using System;
 //using UnityEngine;
 
@@ -66,14 +28,8 @@
 
 //        if (_selfLid == null || _liquidAnimator == null)
 //        {
-//            Debug.LogError("dep not assigned", this);
+//            Debug.LogError("Dependencies not assigned", this);
 //            enabled = false;
-//            return;
-//        }
-
-//        if (_liquidAnimator == null)
-//        {
-//            _liquidAnimator = GetComponentInChildren<LiquidVolumeAnimator>();
 //        }
 //    }
 
@@ -81,16 +37,26 @@
 //    {
 //        if (collision.gameObject.TryGetComponent(out Lid lid))
 //        {
-//            if (_hasCoffee && !_hasLid && _currentCoffeeLevel >= _minCoffeeLevel)
-//            {
-//                _hasLid = true;
-//                _selfLid.gameObject.SetActive(true);
-//                OnLidStateChanged?.Invoke(true);
-//                OnProductStateChanged?.Invoke(IsValidProduct());
-//            }
-
-//            lid.ReturnToPool();
+//            TryAttachLid(lid);
 //        }
+//    }
+
+//    private void TryAttachLid(Lid lid)
+//    {
+//        if (_hasLid) return;
+
+//        if (_isInCoffeeMachine && !_hasCoffee) return;
+
+//        AttachLid();
+//        lid.ReturnToPool();
+//    }
+
+//    private void AttachLid()
+//    {
+//        _hasLid = true;
+//        _selfLid.gameObject.SetActive(true);
+//        OnLidStateChanged?.Invoke(true);
+//        OnProductStateChanged?.Invoke(IsValidProduct());
 //    }
 
 //    public void MarkAsFilled()
@@ -169,13 +135,14 @@
 //}
 
 
+
 using System;
 using UnityEngine;
 
-public class Cup : Food, IRewardableFood, IValidatable
+public class Cup : Food, IRewardableFood
 {
     [SerializeField] private Transform _selfLid;
-    [SerializeField] private float _minCoffeeLevel = 0.1f;
+    [SerializeField] private float _minCoffeeLevel = 0.75f;
     [SerializeField] private LiquidVolumeAnimator _liquidAnimator;
 
     private bool _hasCoffee;
@@ -227,17 +194,18 @@ public class Cup : Food, IRewardableFood, IValidatable
         _hasLid = true;
         _selfLid.gameObject.SetActive(true);
         OnLidStateChanged?.Invoke(true);
-        OnProductStateChanged?.Invoke(IsValidProduct());
+        OnProductStateChanged?.Invoke(IsRewardable());
     }
 
     public void MarkAsFilled()
     {
         if (!_hasCoffee)
         {
+            Debug.Log("MarkAsFilled()");
             _hasCoffee = true;
             _currentCoffeeLevel = 0.75f;
             OnCoffeeStateChanged?.Invoke(true);
-            OnProductStateChanged?.Invoke(IsValidProduct());
+            OnProductStateChanged?.Invoke(IsRewardable());
         }
     }
 
@@ -249,7 +217,7 @@ public class Cup : Food, IRewardableFood, IValidatable
         {
             _hasCoffee = true;
             OnCoffeeStateChanged?.Invoke(true);
-            OnProductStateChanged?.Invoke(IsValidProduct());
+            OnProductStateChanged?.Invoke(IsRewardable());
         }
     }
 
@@ -260,15 +228,10 @@ public class Cup : Food, IRewardableFood, IValidatable
 
     public bool IsRewardable()
     {
-        return IsValidProduct();
-    }
-
-    public bool IsValidProduct()
-    {
         return _hasCoffee && _hasLid && _currentCoffeeLevel >= _minCoffeeLevel;
     }
 
-    public override bool CanInteract => base.CanInteract && (!_isInCoffeeMachine || IsValidProduct());
+    public override bool CanInteract => base.CanInteract && (!_isInCoffeeMachine || IsRewardable());
 
     public override void Interact()
     {
@@ -276,7 +239,7 @@ public class Cup : Food, IRewardableFood, IValidatable
 
         RaiseInteractionRequested();
 
-        if (_isInCoffeeMachine && IsValidProduct())
+        if (_isInCoffeeMachine && IsRewardable())
         {
             return;
         }
