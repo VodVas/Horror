@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73996cec8b09607499585cd942846e43, type: 3}
   m_Name: "Yusuf Dike\xE7 Achievement Data"
   m_EditorClassIdentifier: 
-  <DisplayName>k__BackingField: "\u042E\u0441\u0443\u0444 \u0414\u0438\u043A\u0435\u0447"
-  <Description>k__BackingField: "\u0421\u0431\u0435\u0439 10 \u0431\u0443\u0442\u044B\u043B\u043E\u043A"
+  <DisplayName>k__BackingField: Yusuf Dikec
+  <Description>k__BackingField: Knock Down 10 Bottles
   <RequiredHits>k__BackingField: 10
   <DisplayDuration>k__BackingField: 3
   <FadeDuration>k__BackingField: 0.5
