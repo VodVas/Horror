@@ -5,8 +5,8 @@ public class OutlineOnlyVisibleSettings : ScriptableObject
 {
     [SerializeField] private Color _outlineColor = Color.yellow;
     [SerializeField] private float _outlineWidth = 0.03f;
-    [SerializeField] private string _colorPropertyName = "_OutlineColor";
-    [SerializeField] private string _widthPropertyName = "_OutlineWidth";
+    //[SerializeField] private string _colorPropertyName = "_OutlineColor";
+    //[SerializeField] private string _widthPropertyName = "_OutlineWidth";
 
     public Color OutlineColor => _outlineColor;
     public float OutlineWidth => _outlineWidth;
