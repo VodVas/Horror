@@ -9,6 +9,7 @@ public class MenuController : MonoBehaviour
     [SerializeField] private Button _restartButton;
     [SerializeField] private Button _exitButton;
     [SerializeField] private int _loadSceneNumber;
+    [SerializeField] private bool _isAudioListenerDeactivate = false;
 
     private void Update()
     {
@@ -40,7 +41,9 @@ public class MenuController : MonoBehaviour
     {
         _menuPanel.SetActive(!_menuPanel.activeSelf);
 
-        AudioListener.pause = _menuPanel.activeSelf;
+        if (_isAudioListenerDeactivate)
+            AudioListener.pause = _menuPanel.activeSelf;
+
         Time.timeScale = _menuPanel.activeSelf ? 0f : 1f;
         Cursor.lockState = _menuPanel.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = _menuPanel.activeSelf;

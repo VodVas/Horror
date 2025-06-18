@@ -18,9 +18,7 @@ public sealed class FPSCounter : MonoBehaviour
 
     [Header("UI References (Auto-populated if null)")]
     [SerializeField] private Text _legacyText;
-
     [SerializeField] private TextMeshProUGUI _tmpText;
-
 
     private Canvas _canvas;
     private int _frameCount;

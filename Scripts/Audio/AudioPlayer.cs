@@ -16,17 +16,17 @@ public class AudioPlayer : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        _cutsceneActivator.EndOf1Scene += PlayOnEvent;
-    }
+    //private void OnEnable()
+    //{
+    //    _cutsceneActivator.EndOf1Scene += Play;
+    //}
 
-    private void OnDisable()
-    {
-        _cutsceneActivator.EndOf1Scene -= PlayOnEvent;
-    }
+    //private void OnDisable()
+    //{
+    //    _cutsceneActivator.EndOf1Scene -= Play;
+    //}
 
-    public float GetClipLenght()
+    public float GetClipLength()
     {
         //_audioSource.PlayOneShot(_audioClip);
 
@@ -38,8 +38,8 @@ public class AudioPlayer : MonoBehaviour
         return _audioClip;
     }
 
-    public void PlayOnEvent()
+    public void Play()
     {
-        _audioSource.Play();
+        _audioSource.PlayOneShot(_audioClip);
     }
 }

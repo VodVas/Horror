@@ -3,7 +3,6 @@
 public class EmoSetter : MonoBehaviour
 {
     [SerializeField] private EmotionType _enterEmotion = EmotionType.Happy;
-    //[SerializeField] private EmotionType _exitEmotion = EmotionType.Neutral;
     [SerializeField] private FacialExpressionController _expressionController;
 
     private void Awake()

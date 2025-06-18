@@ -35,7 +35,7 @@
 
 //    private void OnTriggerEnter(Collider other)
 //    {
-//        if (other.TryGetComponent(out Food food) && food is IRewardableFood)
+//        if (other.TryGetComponent(out IRewardableFood rewardableFood) && rewardableFood.IsRewardable())
 //        {
 //            _hitCount++;
 //            Debug.Log($"Hit count: {_hitCount}");
@@ -79,7 +79,6 @@
 //        _emoSetter.SetEnterEmotion();
 //        yield return new WaitForSeconds(_roundSoundPlayerDuration);
 
-//        //_audioSource.PlayOneShot(_daveSpeech);
 //        _hybridLipSync.StartLipSync(_daveSpeech);
 //        yield return new WaitForSeconds(_daveSpeech.length + 0.2f);
 
@@ -110,7 +109,6 @@ public class CutsceneActivator : MonoBehaviour
     [SerializeField] private Transform _cutsceneObject;
     [SerializeField] private GameObject _cameraObject;
     [SerializeField] private float _cutsceneDuration;
-
     [SerializeField] private WaypointMover[] _waypointMover;
 
     [Header("Second Cutscene")]
@@ -124,66 +122,86 @@ public class CutsceneActivator : MonoBehaviour
     [SerializeField] private GameObject _monster;
     [SerializeField] private EmoSetter _emoSetter;
     [SerializeField] private AudioClip _ambientSound;
-
     [SerializeField] private HybridLipSync _hybridLipSync;
+    [SerializeField] private FoodValidator _foodValidator;
+    //[SerializeField] private MonsterEnabler _monsterEnabler;
 
     private int _hitCount = 0;
 
     public event Action EndOf1Scene;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnEnable()
     {
-        if (other.TryGetComponent(out IRewardableFood rewardableFood) && rewardableFood.IsRewardable())
+        if (_foodValidator != null)
         {
-            _hitCount++;
-            Debug.Log($"Hit count: {_hitCount}");
-            if (_hitCount == _requiredHitsFirstCutscene)
-            {
-                StartCoroutine(PlayAndHide1CutsceneAfterDelay());
-            }
-
-            if (_hitCount == _requiredHitsSecondCutscene)
-            {
-                StartCoroutine(WaitAndRun());
-            }
+            _foodValidator.OnValidFoodDetected += HandleValidFood;
         }
     }
 
-    private IEnumerator PlayAndHide1CutsceneAfterDelay()
+    private void OnDisable()
     {
-        _cutsceneObject.gameObject.SetActive(true);
-
-        bool hasAudioListener = _cameraObject.TryGetComponent(out AudioListener audioListener);
-
-        if (hasAudioListener)
+        if (_foodValidator != null)
         {
-            _waypointMover[0].enabled = false;
+            _foodValidator.OnValidFoodDetected -= HandleValidFood;
+        }
+    }
 
-            if (hasAudioListener) audioListener.enabled = false;
+    private void HandleValidFood(GameObject foodObject)
+    {
+        _hitCount++;
+        Debug.Log($"Hit count: {_hitCount}");
 
-            yield return new WaitForSeconds(_cutsceneDuration);
-
-            if (hasAudioListener) audioListener.enabled = true;
+        if (_hitCount == _requiredHitsFirstCutscene)
+        {
+            //StartCoroutine(PlayAndHide1CutsceneAfterDelay());
         }
 
-        _cutsceneObject.gameObject.SetActive(false);
-
-        EndOf1Scene?.Invoke();
+        if (_hitCount == _requiredHitsSecondCutscene)
+        {
+            StartCoroutine(WaitAndRun());
+        }
     }
+
+    //private IEnumerator PlayAndHide1CutsceneAfterDelay()
+    //{
+    //    _cutsceneObject.gameObject.SetActive(true);
+
+    //    bool hasAudioListener = _cameraObject.TryGetComponent(out AudioListener audioListener);
+
+    //    if (hasAudioListener)
+    //    {
+    //        _waypointMover[0].enabled = false;
+    //        audioListener.enabled = false;
+
+    //        yield return new WaitForSeconds(_cutsceneDuration);
+
+    //        audioListener.enabled = true;
+    //    }
+
+    //    _cutsceneObject.gameObject.SetActive(false);
+
+    //    EndOf1Scene?.Invoke();
+    //}
 
     private IEnumerator WaitAndRun()
     {
+        _audioSource.Play();
+        yield return null;
+
+        _monster?.SetActive(true);
         _roundSoundPlayer.SetActive(true);
         _emoSetter.SetEnterEmotion();
         yield return new WaitForSeconds(_roundSoundPlayerDuration);
 
         _hybridLipSync.StartLipSync(_daveSpeech);
-        yield return new WaitForSeconds(_daveSpeech.length + 0.2f);
+        yield return new WaitForSeconds(_daveSpeech.length + 0.5f);
+        EndOf1Scene?.Invoke();
 
-        _cutsceneTimeline.SetActive(true);
         _animator?.SetBool(IsRunning, true);
-
         _waypointMover[1].enabled = true;
+
+        yield return new WaitForSeconds(0.5f);
+        _cutsceneTimeline.SetActive(true);
 
         yield return new WaitForSeconds(0.8f);
 

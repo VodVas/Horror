@@ -57,6 +57,7 @@ public class FadeEffect : MonoBehaviour
         if (_canvasGroup == null && _fadeImage != null)
         {
             _canvasGroup = _fadeImage.GetComponent<CanvasGroup>();
+
             if (_canvasGroup == null)
             {
                 _canvasGroup = _fadeImage.gameObject.AddComponent<CanvasGroup>();

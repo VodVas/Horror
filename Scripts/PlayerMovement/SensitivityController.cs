@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class MouseSensitivityController : MonoBehaviour
+public class SensitivityController : MonoBehaviour
 {
     [SerializeField] private MovementConfig _movementConfig;
     [SerializeField] private Slider _sensitivitySlider;

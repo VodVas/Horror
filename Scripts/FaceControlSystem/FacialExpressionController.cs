@@ -10,6 +10,8 @@ public class FacialExpressionController : MonoBehaviour, IFacialExpressionContro
     [SerializeField] private SkinnedMeshRenderer faceMesh;
     [SerializeField] private EmotionData[] emotionDatabase;
     [SerializeField] private bool autoInitialize = true;
+    [SerializeField] private bool _isStartEmotion = false;
+    [SerializeField] private EmotionType _defaultEmotion = EmotionType.Fearful;
 
     private readonly Dictionary<BlendShape, int> _blendShapeIndices = new Dictionary<BlendShape, int>(BlendShapeCount);
     private readonly Dictionary<EmotionType, EmotionData> _emotions = new Dictionary<EmotionType, EmotionData>();
@@ -50,6 +52,13 @@ public class FacialExpressionController : MonoBehaviour, IFacialExpressionContro
         if (autoInitialize) Initialize();
     }
 
+    private void Start()
+    {
+        if (_isStartEmotion)
+            StartEmotion();
+
+    }
+
     private void Update()
     {
         if (_isTransitioning) UpdateTransition();
@@ -83,6 +92,11 @@ public class FacialExpressionController : MonoBehaviour, IFacialExpressionContro
         _emotions.Clear();
         foreach (var emotion in emotionDatabase)
             if (emotion) _emotions[emotion.Type] = emotion;
+    }
+
+    public void StartEmotion()
+    {
+        SetEmotion(_defaultEmotion);
     }
 
     public void SetEmotion(EmotionType emotion)

@@ -1,8 +1,199 @@
+//using UnityEngine;
+//using Cysharp.Threading.Tasks;
+//using System.Threading;
+
+//[RequireComponent(typeof(Collider), typeof(AudioSource))]
+//public abstract class NPCInteractionHandler : MonoBehaviour
+//{
+//    private enum LipSyncMode { Precise, Hybrid }
+
+//    [Header("UI Feedback")]
+//    [SerializeField] private RectTransform _feedbackElement;
+//    [SerializeField] private CanvasGroup _canvasGroup;
+//    [SerializeField] private FeedbackAnimationData _animationData;
+
+//    [Header("Audio")]
+//    [SerializeField] private AudioSource _audioSource;
+
+//    [Header("Lip Sync Settings")]
+//    [SerializeField] private LipSyncMode _lipSyncMode = LipSyncMode.Hybrid;
+//    [SerializeField] protected PreciseLipSyncController _preciseLipSyncController;
+//    [SerializeField] protected HybridLipSync _hybridLipSyncController;
+
+//    [Header("Precise Mode Clips")]
+//    [SerializeField] protected PhonemicClip[] _preciseDialogueClips;
+
+//    [Header("Hybrid Mode Clips")]
+//    [SerializeField] protected AudioClip[] _hybridDialogueClips;
+
+//    private Vector2 _initialPosition;
+//    private IFeedbackAnimator _animator;
+//    private CancellationTokenSource _interactionCts;
+//    private bool _isInteracting;
+
+//    protected virtual void Awake()
+//    {
+//        _initialPosition = _feedbackElement.anchoredPosition;
+//        _canvasGroup.alpha = 0f;
+//        _animator = new DotweenFeedbackAnimator(_animationData);
+
+//        if (_lipSyncMode == LipSyncMode.Precise && _preciseLipSyncController == null)
+//            Debug.LogError("PreciseLipSyncController is not assigned!", this);
+//        if (_lipSyncMode == LipSyncMode.Hybrid && _hybridLipSyncController == null)
+//            Debug.LogError("HybridLipSyncController is not assigned!", this);
+//    }
+
+//    private void OnTriggerEnter(Collider other)
+//    {
+//        if (!CanInteract(other)) return;
+
+//        HandleInteraction(other).Forget();
+//    }
+
+//    private void OnDestroy()
+//    {
+//        if (this == null || gameObject == null) return;
+
+//        CancelCurrentInteraction();
+//    }
+
+//    private bool CanInteract(Collider other)
+//    {
+//        return other.TryGetComponent(out IInteractable _)
+//            && !_isInteracting
+//            && !_animator.IsAnimating;
+//    }
+
+//    private async UniTaskVoid HandleInteraction(Collider other)
+//    {
+//        _isInteracting = true;
+//        CancelCurrentInteraction();
+//        _interactionCts = new CancellationTokenSource();
+
+//        try
+//        {
+//            bool shouldGiveReward = CheckIfRewardable(other);
+
+//            if (shouldGiveReward)
+//            {
+//                PlayMoneyEffects();
+//                ReturnFoodToPool(other);
+
+//                await UniTask.WhenAll(
+//                    PlayFeedbackAnimation(_interactionCts.Token),
+//                    PlayDialogue(_interactionCts.Token)
+//                );
+
+//                return;
+//            }
+
+//            ReturnFoodToPool(other);
+//        }
+//        finally
+//        {
+//            _isInteracting = false;
+//        }
+//    }
+
+//    private bool CheckIfRewardable(Collider other)
+//    {
+//        if (other.TryGetComponent(out IRewardableFood rewardableFood))
+//        {
+//            return rewardableFood.IsRewardable();
+//        }
+
+//        return false;
+//    }
+
+//    private void ReturnFoodToPool(Collider other)
+//    {
+//        if (other.TryGetComponent(out Food food))
+//        {
+//            food.ReturnToPool();
+//        }
+//    }
+
+//    private void PlayMoneyEffects()
+//    {
+//        _audioSource.Play();
+//        _animator.PlayAnimation(_feedbackElement, _canvasGroup, _initialPosition);
+//    }
+
+//    private async UniTask PlayFeedbackAnimation(CancellationToken ct)
+//    {
+//        while (_animator.IsAnimating && !ct.IsCancellationRequested)
+//        {
+//            await UniTask.Yield(ct);
+//        }
+//    }
+
+//    private async UniTask PlayDialogue(CancellationToken ct)
+//    {
+//        switch (_lipSyncMode)
+//        {
+//            case LipSyncMode.Precise:
+//                await PlayPreciseDialogue(ct);
+//                break;
+//            case LipSyncMode.Hybrid:
+//                await PlayHybridDialogue(ct);
+//                break;
+//        }
+//    }
+
+//    private async UniTask PlayPreciseDialogue(CancellationToken ct)
+//    {
+//        if (_preciseLipSyncController == null || _preciseDialogueClips.Length == 0) return;
+
+//        var clipIndex = Random.Range(0, _preciseDialogueClips.Length);
+//        _preciseLipSyncController.PlayDialogue(_preciseDialogueClips[clipIndex].name);
+
+//        while (_preciseLipSyncController.IsPlaying && !ct.IsCancellationRequested)
+//        {
+//            await UniTask.Yield(ct);
+//        }
+//    }
+
+//    private async UniTask PlayHybridDialogue(CancellationToken ct)
+//    {
+//        if (_hybridLipSyncController == null || _hybridDialogueClips.Length == 0) return;
+
+//        var clip = _hybridDialogueClips[Random.Range(0, _hybridDialogueClips.Length)];
+//        _hybridLipSyncController.StartLipSync(clip);
+
+//        while (_hybridLipSyncController.IsPlaying && !ct.IsCancellationRequested)
+//        {
+//            await UniTask.Yield(ct);
+//        }
+//    }
+
+//    private void CancelCurrentInteraction()
+//    {
+//        _interactionCts?.Cancel();
+//        _interactionCts?.Dispose();
+//        _interactionCts = null;
+
+//        if (this == null || gameObject == null) return;
+//        if (!this || !gameObject) return;
+
+//        switch (_lipSyncMode)
+//        {
+//            case LipSyncMode.Precise:
+//                _preciseLipSyncController?.StopDialogue();
+//                break;
+//            case LipSyncMode.Hybrid:
+//                _hybridLipSyncController?.StopLipSync();
+//                break;
+//        }
+//    }
+//}
+
+
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using System;
 
-[RequireComponent(typeof(Collider), typeof(AudioSource))]
+[RequireComponent(typeof(AudioSource))]
 public abstract class NPCInteractionHandler : MonoBehaviour
 {
     private enum LipSyncMode { Precise, Hybrid }
@@ -14,6 +205,7 @@ public abstract class NPCInteractionHandler : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioSource _audioSource;
+    //[SerializeField] private AudioClip _invalidFoodSound;
 
     [Header("Lip Sync Settings")]
     [SerializeField] private LipSyncMode _lipSyncMode = LipSyncMode.Hybrid;
@@ -26,10 +218,16 @@ public abstract class NPCInteractionHandler : MonoBehaviour
     [Header("Hybrid Mode Clips")]
     [SerializeField] protected AudioClip[] _hybridDialogueClips;
 
+    [Header("Invalid Food Responses")]
+    [SerializeField] private PhonemicClip[] _preciseInvalidClips;
+    [SerializeField] private AudioClip[] _hybridInvalidClips;
+
     private Vector2 _initialPosition;
     private IFeedbackAnimator _animator;
     private CancellationTokenSource _interactionCts;
     private bool _isInteracting;
+
+    [SerializeField] private FoodValidator _foodValidator;
 
     protected virtual void Awake()
     {
@@ -43,28 +241,49 @@ public abstract class NPCInteractionHandler : MonoBehaviour
             Debug.LogError("HybridLipSyncController is not assigned!", this);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnEnable()
     {
-        if (!CanInteract(other)) return;
+        if (_foodValidator != null)
+        {
+            _foodValidator.OnFoodValidated += HandleFoodValidation;
+        }
+    }
 
-        HandleInteraction(other).Forget();
+    private void OnDisable()
+    {
+        if (_foodValidator != null)
+        {
+            _foodValidator.OnFoodValidated -= HandleFoodValidation;
+        }
     }
 
     private void OnDestroy()
     {
-        if (this == null || gameObject == null) return;
-
         CancelCurrentInteraction();
     }
 
-    private bool CanInteract(Collider other)
+    private void HandleFoodValidation(GameObject foodObject, bool isValid)
     {
-        return other.TryGetComponent(out IInteractable _)
-            && !_isInteracting
-            && !_animator.IsAnimating;
+        if (_isInteracting || !CanInteract(foodObject)) return;
+
+        if (isValid)
+        {
+            HandleValidFood(foodObject).Forget();
+        }
+        else
+        {
+            HandleInvalidFood(foodObject).Forget();
+        }
     }
 
-    private async UniTaskVoid HandleInteraction(Collider other)
+    private bool CanInteract(GameObject foodObject)
+    {
+        return foodObject != null &&
+               foodObject.TryGetComponent(out IInteractable _) &&
+               !_animator.IsAnimating;
+    }
+
+    private async UniTaskVoid HandleValidFood(GameObject foodObject)
     {
         _isInteracting = true;
         CancelCurrentInteraction();
@@ -72,22 +291,16 @@ public abstract class NPCInteractionHandler : MonoBehaviour
 
         try
         {
-            bool shouldGiveReward = CheckIfRewardable(other);
+            PlayMoneyEffects();
+            ReturnFoodToPool(foodObject);
 
-            if (shouldGiveReward)
-            {
-                PlayMoneyEffects();
-                ReturnFoodToPool(other);
-
-                await UniTask.WhenAll(
-                    PlayFeedbackAnimation(_interactionCts.Token),
-                    PlayDialogue(_interactionCts.Token)
-                );
-
-                return;
-            }
-
-            ReturnFoodToPool(other);
+            await UniTask.WhenAll(
+                PlayFeedbackAnimation(_interactionCts.Token),
+                PlayDialogue(_interactionCts.Token)
+            );
+        }
+        catch (OperationCanceledException)
+        {
         }
         finally
         {
@@ -95,19 +308,58 @@ public abstract class NPCInteractionHandler : MonoBehaviour
         }
     }
 
-    private bool CheckIfRewardable(Collider other)
+    private async UniTaskVoid HandleInvalidFood(GameObject foodObject)
     {
-        if (other.TryGetComponent(out IRewardableFood rewardableFood))
-        {
-            return rewardableFood.IsRewardable();
-        }
+        if (_isInteracting) return;
+        _isInteracting = true;
+        CancelCurrentInteraction();
+        _interactionCts = new CancellationTokenSource();
 
-        return false;
+        try
+        {
+            //PlayInvalidFoodFeedback();
+            ReturnFoodToPool(foodObject); // Сначала убираем еду
+            await PlayDialogue(_interactionCts.Token, isValid: false);
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        finally
+        {
+            _isInteracting = false;
+            _interactionCts?.Dispose();
+            _interactionCts = null;
+        }
     }
 
-    private void ReturnFoodToPool(Collider other)
+    //private async UniTaskVoid HandleInvalidFood(GameObject foodObject)
+    //{
+    //    if (_isInteracting) return;
+    //    _isInteracting = true;
+
+    //    try
+    //    {
+    //        PlayInvalidFoodFeedback();
+    //        await UniTask.Yield(destroyCancellationToken);
+    //        ReturnFoodToPool(foodObject);
+    //    }
+    //    catch (OperationCanceledException)
+    //    {
+    //    }
+    //    finally
+    //    {
+    //        _isInteracting = false;
+    //    }
+    //}
+
+    //private void PlayInvalidFoodFeedback()
+    //{
+    //    _audioSource.PlayOneShot(_invalidFoodSound);
+    //}
+
+    private void ReturnFoodToPool(GameObject foodObject)
     {
-        if (other.TryGetComponent(out Food food))
+        if (foodObject != null && foodObject.TryGetComponent(out Food food))
         {
             food.ReturnToPool();
         }
@@ -127,25 +379,28 @@ public abstract class NPCInteractionHandler : MonoBehaviour
         }
     }
 
-    private async UniTask PlayDialogue(CancellationToken ct)
+    private async UniTask PlayDialogue(CancellationToken ct, bool isValid = true)
     {
         switch (_lipSyncMode)
         {
             case LipSyncMode.Precise:
-                await PlayPreciseDialogue(ct);
+                await PlayPreciseDialogue(ct, isValid);
                 break;
             case LipSyncMode.Hybrid:
-                await PlayHybridDialogue(ct);
+                await PlayHybridDialogue(ct, isValid);
                 break;
         }
     }
 
-    private async UniTask PlayPreciseDialogue(CancellationToken ct)
+    private async UniTask PlayPreciseDialogue(CancellationToken ct, bool isValid)
     {
-        if (_preciseLipSyncController == null || _preciseDialogueClips.Length == 0) return;
+        if (_preciseLipSyncController == null) return;
 
-        var clipIndex = Random.Range(0, _preciseDialogueClips.Length);
-        _preciseLipSyncController.PlayDialogue(_preciseDialogueClips[clipIndex].name);
+        var clips = isValid ? _preciseDialogueClips : _preciseInvalidClips;
+        if (clips.Length == 0) return;
+
+        var clipIndex = UnityEngine.Random.Range(0, clips.Length);
+        _preciseLipSyncController.PlayDialogue(clips[clipIndex].name);
 
         while (_preciseLipSyncController.IsPlaying && !ct.IsCancellationRequested)
         {
@@ -153,11 +408,14 @@ public abstract class NPCInteractionHandler : MonoBehaviour
         }
     }
 
-    private async UniTask PlayHybridDialogue(CancellationToken ct)
+    private async UniTask PlayHybridDialogue(CancellationToken ct, bool isValid)
     {
-        if (_hybridLipSyncController == null || _hybridDialogueClips.Length == 0) return;
+        if (_hybridLipSyncController == null) return;
 
-        var clip = _hybridDialogueClips[Random.Range(0, _hybridDialogueClips.Length)];
+        var clips = isValid ? _hybridDialogueClips : _hybridInvalidClips;
+        if (clips.Length == 0) return;
+
+        var clip = clips[UnityEngine.Random.Range(0, clips.Length)];
         _hybridLipSyncController.StartLipSync(clip);
 
         while (_hybridLipSyncController.IsPlaying && !ct.IsCancellationRequested)
@@ -173,7 +431,6 @@ public abstract class NPCInteractionHandler : MonoBehaviour
         _interactionCts = null;
 
         if (this == null || gameObject == null) return;
-        if (!this || !gameObject) return;
 
         switch (_lipSyncMode)
         {

@@ -21,7 +21,7 @@ public class GreetingsTriggerActivator : MonoBehaviour
             {
                 _emoSetter.SetEnterEmotion();
                 _hybridLipSync.StartLipSync(_audioPlayer.GetAudioClip());
-                StartCoroutine(Delay(_audioPlayer.GetClipLenght()));
+                StartCoroutine(Delay(_audioPlayer.GetClipLength()));
                 _secondCutsceneActivator.SetActive(true);
                 _isGreetingsEnabled = false;
             }
