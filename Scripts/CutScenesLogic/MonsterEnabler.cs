@@ -20,6 +20,11 @@ public class MonsterEnabler : MonoBehaviour
         _monster.SetActive(true);
     }
 
+    public void Deactivate()
+    {
+        _monster.SetActive(false);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Player _))

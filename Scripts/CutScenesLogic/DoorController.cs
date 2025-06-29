@@ -129,6 +129,13 @@ public class DoorController : MonoBehaviour
             Debug.LogError("[DoorController] Rotation axis cannot be zero", this);
             _rotationAxis = Vector3.up;
         }
+
+        if (_audioSource == null)
+        {
+            Debug.Log("Audio not assigned", this);
+            enabled = false;
+            return;
+        }
     }
 
     private void InitializeRotations()

@@ -23,12 +23,13 @@ public class ScreamerActivator : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private EmoSetter _emoSetter;
-    [SerializeField] private SecondCutsceneActivator _secondCutscene;
     [SerializeField] private AudioSource _screamAudioSource;
     [SerializeField] private AudioClip _screamSound;
     [SerializeField] private ObjectOnceShaker _cameraShaker;
     [SerializeField] private SkinnedMeshRenderer _bodyMeshRenderer;
     [SerializeField] private SkinnedMeshRenderer _headMeshRenderer;
+
+    [SerializeField] private GiggleSceneLogic _giggleSceneLogic;
 
     private ActivationState _currentState = ActivationState.Idle;
     private Coroutine _activationCoroutine;
@@ -40,16 +41,16 @@ public class ScreamerActivator : MonoBehaviour
         ValidateReferences();
     }
 
-    //private void OnEnable()
-    //{
-    //    if (_secondCutscene != null)
-    //        _secondCutscene.EndOf2Scene += OnSceneEnded;
-    //}
+    private void OnEnable()
+    {
+        if (_giggleSceneLogic != null)
+            _giggleSceneLogic.EndOfScene += OnSceneEnded;
+    }
 
     private void OnDisable()
     {
-        if (_secondCutscene != null)
-            _secondCutscene.EndOf2Scene -= OnSceneEnded;
+        if (_giggleSceneLogic != null)
+            _giggleSceneLogic.EndOfScene -= OnSceneEnded;
 
         StopActivationSequence();
     }

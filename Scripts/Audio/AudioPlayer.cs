@@ -4,7 +4,6 @@ public class AudioPlayer : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _audioClip;
-    [SerializeField] private CutsceneActivator _cutsceneActivator;
 
     private void Awake()
     {
@@ -16,20 +15,8 @@ public class AudioPlayer : MonoBehaviour
         }
     }
 
-    //private void OnEnable()
-    //{
-    //    _cutsceneActivator.EndOf1Scene += Play;
-    //}
-
-    //private void OnDisable()
-    //{
-    //    _cutsceneActivator.EndOf1Scene -= Play;
-    //}
-
     public float GetClipLength()
     {
-        //_audioSource.PlayOneShot(_audioClip);
-
         return _audioClip.length;
     }
 
@@ -41,5 +28,11 @@ public class AudioPlayer : MonoBehaviour
     public void Play()
     {
         _audioSource.PlayOneShot(_audioClip);
+        //_audioSource.Play();
+    }
+
+    public void Stop()
+    {
+        _audioSource.Stop();
     }
 }

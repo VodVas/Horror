@@ -4,6 +4,7 @@ public class BloodHeadTriggerActivator : MonoBehaviour
 {
     [SerializeField] private GameObject _beatEffect;
     [SerializeField] private GameObject _particleBlood;
+    [SerializeField] private GameObject _bloodPoint;
     [SerializeField] private Transform _position;
 
     private void OnTriggerEnter(Collider other)
@@ -11,9 +12,9 @@ public class BloodHeadTriggerActivator : MonoBehaviour
         if (other.TryGetComponent(out Wall _))
         {
             _beatEffect.SetActive(true);
+
             Spawn();
         }
-
     }
 
     private void OnTriggerExit(Collider other)
@@ -21,11 +22,15 @@ public class BloodHeadTriggerActivator : MonoBehaviour
         if (other.TryGetComponent(out Wall _))
         {
             _beatEffect.SetActive(false);
+            _bloodPoint.SetActive(true);
         }
     }
 
     public void Spawn()
     {
-        Instantiate(_particleBlood, _position.position, _position.rotation);
+        GameObject bloodInstance = Instantiate(_particleBlood, _position.position, _position.rotation);
+        _particleBlood.gameObject.SetActive(true);
+
+        Destroy(bloodInstance, 3f);
     }
 }

@@ -4,6 +4,8 @@ public class EmoSetter : MonoBehaviour
 {
     [SerializeField] private EmotionType _enterEmotion = EmotionType.Happy;
     [SerializeField] private FacialExpressionController _expressionController;
+    [SerializeField] private float _duration = 0.5f;
+    [SerializeField] private float _intensity = 1.0f;
 
     private void Awake()
     {
@@ -25,6 +27,6 @@ public class EmoSetter : MonoBehaviour
 
     private void SetEmotion(EmotionType emotion)
     {
-        _expressionController.SetEmotion(emotion);
+        _expressionController.SetEmotion(emotion, _intensity, _duration);
     }
 }

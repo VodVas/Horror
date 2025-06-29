@@ -39,6 +39,21 @@ public class ObjectOnceShaker : MonoBehaviour
         _shakeCoroutine = StartCoroutine(ShakeRoutine());
     }
 
+    public void FinalizeShake()
+    {
+        if (_transform != null)
+        {
+            _transform.localPosition = _originalPosition;
+        }
+        _isShaking = false;
+        _shakeCoroutine = null;
+    }
+
+    public void StopShake()
+    {
+        StopAllCoroutines();
+    }
+
     private IEnumerator ShakeRoutine()
     {
         _isShaking = true;
@@ -62,16 +77,6 @@ public class ObjectOnceShaker : MonoBehaviour
         }
 
         FinalizeShake();
-    }
-
-    private void FinalizeShake()
-    {
-        if (_transform != null)
-        {
-            _transform.localPosition = _originalPosition;
-        }
-        _isShaking = false;
-        _shakeCoroutine = null;
     }
 
     private void OnDisable()

@@ -11,6 +11,7 @@ public class FadeEffect : MonoBehaviour
 
     [Header("Dependencies")]
     [SerializeField] private ScreamerActivator _screamerActivator;
+    [SerializeField] private bool _isFadeIn = true;
 
     [Header("Fade Settings")]
     [SerializeField] private float _fadeDuration = 1f;
@@ -69,7 +70,7 @@ public class FadeEffect : MonoBehaviour
 
     private void InitializeFadeTarget()
     {
-        SetAlpha(0f);
+        //SetAlpha(0f);
 
         if (_deactivateWhenTransparent)
         {
@@ -79,15 +80,20 @@ public class FadeEffect : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_screamerActivator != null)
+        if (_screamerActivator != null && _isFadeIn)
         {
             _screamerActivator.OnSequenceCompleted += HandleSequenceCompleted;
+        }
+
+        if (!_isFadeIn)
+        {
+            FadeOut();
         }
     }
 
     private void OnDisable()
     {
-        if (_screamerActivator != null)
+        if (_screamerActivator != null && _isFadeIn)
         {
             _screamerActivator.OnSequenceCompleted -= HandleSequenceCompleted;
         }
